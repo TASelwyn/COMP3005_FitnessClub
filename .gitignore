@@ -1,73 +1,33 @@
-# ===== Java / Maven =====
+HELP.md
 target/
-!.mvn/wrapper/maven-wrapper.jar
-.mvn/wrapper/maven-wrapper.properties
-**/mvnw
-**/mvnw.cmd
+.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
 
-# Compiled class files
-*.class
-*.jar
-*.war
-*.ear
-
-# Logs
-*.log
-
-# IDEs and project files
-.idea/
-*.iml
-.vscode/
+### STS ###
+.apt_generated
 .classpath
+.factorypath
 .project
-.settings/
-bin/
-out/
+.settings
+.springBeans
+.sts4-cache
 
-# ===== Spring Boot =====
-# Environment / config
-application.properties
-application.yml
-application-dev.yml
-application-prod.yml
-.env
-*.db
-*.sqlite
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
 
-# ===== OS Files =====
-.DS_Store
-Thumbs.db
-
-# ===== Node / React (Vite) =====
-frontend/node_modules/
-frontend/dist/
-frontend/.vite/
-frontend/.env
-frontend/.env.local
-frontend/.env.*.local
-frontend/npm-debug.log*
-frontend/yarn-debug.log*
-frontend/yarn-error.log*
-frontend/package-lock.json
-frontend/pnpm-lock.yaml
-frontend/.eslintcache
-
-# ===== Coverage / Testing =====
-/coverage/
-*.lcov
-*.hprof
-
-# ===== Build tools =====
-.gradle/
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
 build/
-.gradle-cache/
-!gradle/wrapper/gradle-wrapper.jar
+!**/src/main/**/build/
+!**/src/test/**/build/
 
-# ===== Miscellaneous =====
-*.swp
-*.bak
-*.tmp
-*.orig
-*.rej
-*~
-*.swo
+### VS Code ###
+.vscode/
