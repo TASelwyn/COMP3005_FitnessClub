@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: fitnessclub
+  datasource:
+    url: jdbc:postgresql://localhost:5432/fitnessclub
+    username: comp3005
+    password: password
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  security:
+    user:
+      name: user
+      password: user
+server:
+  port: 8080

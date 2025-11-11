@@ -1,9 +1,13 @@
 services:
   postgres:
-    image: 'postgres:latest'
+    image: 'postgres:18-alpine'
     environment:
-      - 'POSTGRES_DB=mydatabase'
-      - 'POSTGRES_PASSWORD=secret'
-      - 'POSTGRES_USER=myuser'
+      - 'POSTGRES_DB=fitnessclub'
+      - 'POSTGRES_USER=comp3005'
+      - 'POSTGRES_PASSWORD=password'
+    volumes:
+      - postgres:/var/lib/postgresql
     ports:
       - '5432'
+volumes:
+  postgres:
