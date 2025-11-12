@@ -107,6 +107,14 @@
 					</excludes>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.liquibase</groupId>
+				<artifactId>liquibase-maven-plugin</artifactId>
+				<version>${liquibase.version}</version>
+				<configuration>
+					<propertyFile>src/main/resources/application.yml</propertyFile>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 

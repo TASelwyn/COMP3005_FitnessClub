@@ -1,13 +1,13 @@
 services:
   postgres:
-    image: 'postgres:18-alpine'
+    image: postgres:18-alpine
     environment:
-      - 'POSTGRES_DB=fitnessclub'
-      - 'POSTGRES_USER=comp3005'
-      - 'POSTGRES_PASSWORD=password'
+      POSTGRES_DB: fitnessclub
+      POSTGRES_USER: comp3005
+      POSTGRES_PASSWORD: password
     volumes:
       - postgres:/var/lib/postgresql
     ports:
-      - '5432'
+      - "8652:5432"
 volumes:
   postgres:

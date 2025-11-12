@@ -1,14 +1,17 @@
 spring:
   application:
     name: fitnessclub
+
   datasource:
-    url: jdbc:postgresql://localhost:5432/fitnessclub
+    url: jdbc:postgresql://localhost:8652/fitnessclub
     username: comp3005
     password: password
+
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: update # Set to "validate" for submission (requires generating liquibase changelog!!!)
     show-sql: true
+
   security:
     user:
       name: user
