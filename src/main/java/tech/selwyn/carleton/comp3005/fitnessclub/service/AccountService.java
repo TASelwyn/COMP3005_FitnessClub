@@ -1,12 +1,14 @@
 package tech.selwyn.carleton.comp3005.fitnessclub.service;
 
 import jakarta.transaction.Transactional;
-import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import tech.selwyn.carleton.comp3005.fitnessclub.model.ClubAccount;
+import tech.selwyn.carleton.comp3005.fitnessclub.model.Account;
 import tech.selwyn.carleton.comp3005.fitnessclub.model.RoleType;
 import tech.selwyn.carleton.comp3005.fitnessclub.repository.AccountRepository;
+
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class AccountService {
@@ -19,19 +21,25 @@ public class AccountService {
     }
 
     @Transactional
-    public ClubAccount register(String firstName, String lastName, String email, String password) {
+    public Account register(String firstName, String lastName, String email, String password) {
         if (accRepo.findByEmail(email).isPresent()) {
             throw new IllegalArgumentException("Email already exists");
         }
 
-        ClubAccount newClubAccount = new ClubAccount();
-        newClubAccount.setEmail(email);
+        Account newAccount = new Account();
+        newAccount.setEmail(email);
 
-        newClubAccount.setFirstName(firstName);
-        newClubAccount.setLastName(lastName);
-        newClubAccount.setPasswordHash(encoder.encode(password));
-        newClubAccount.setRole(RoleType.ROLE_MEMBER.toString());
+        newAccount.setFirstName(firstName);
+        newAccount.setLastName(lastName);
+        newAccount.setPasswordHash(encoder.encode(password));
+        newAccount.setRole(RoleType.ROLE_MEMBER.toString());
 
-        return accRepo.save(newClubAccount);
+        return accRepo.save(newAccount);
+    }
+
+    public List<Map<String, Object>> lookupMember(String name) {
+        return accRepo.searchMembersByName(name).stream()
+                .map(Account::toSummary)
+                .toList();
     }
 }

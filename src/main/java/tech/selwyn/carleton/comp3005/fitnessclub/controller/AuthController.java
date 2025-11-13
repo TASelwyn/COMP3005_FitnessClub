@@ -1,6 +1,8 @@
 package tech.selwyn.carleton.comp3005.fitnessclub.controller;
 
-import lombok.AllArgsConstructor;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -11,10 +13,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import tech.selwyn.carleton.comp3005.fitnessclub.dto.LoginRequest;
-import tech.selwyn.carleton.comp3005.fitnessclub.dto.RegisterRequest;
-import tech.selwyn.carleton.comp3005.fitnessclub.model.ClubAccount;
+import tech.selwyn.carleton.comp3005.fitnessclub.dto.LoginRequestDto;
+import tech.selwyn.carleton.comp3005.fitnessclub.dto.RegisterRequestDto;
+import tech.selwyn.carleton.comp3005.fitnessclub.model.Account;
 import tech.selwyn.carleton.comp3005.fitnessclub.service.AccountService;
+
+import java.util.Map;
 
 @RestController
 @RequestMapping("/auth")
@@ -28,17 +32,25 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<ClubAccount> register(@RequestBody @NotNull RegisterRequest req) {
-
-        ClubAccount newClubAccount = accService.register(req.firstName(), req.lastName(), req.email(), req.password());
-        return ResponseEntity.ok(newClubAccount);
+    public ResponseEntity<Account> register(@RequestBody @NotNull RegisterRequestDto req) {
+        Account newAccount = accService.register(req.firstName(), req.lastName(), req.email(), req.password());
+        return ResponseEntity.ok(newAccount);
     }
 
     @PostMapping("/login")
-    public String login(@RequestBody @NotNull LoginRequest req) {
+    public ResponseEntity<?> login(@RequestBody @NotNull LoginRequestDto req) {
         Authentication auth = authManager.authenticate(new UsernamePasswordAuthenticationToken(req.email(), req.password()));
         SecurityContextHolder.getContext().setAuthentication(auth);
 
-        return "Successfully logged in as " + auth.getName();
+        return ResponseEntity.ok(Map.of(
+                "message", "Login successful",
+                "user", req.email()
+        ));
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<?> logout(HttpServletRequest req, HttpServletResponse res) throws ServletException {
+        req.logout();
+        return ResponseEntity.ok(Map.of("message", "Logged out"));
     }
 }
