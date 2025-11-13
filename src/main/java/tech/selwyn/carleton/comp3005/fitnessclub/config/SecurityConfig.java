@@ -1,7 +1,6 @@
 package tech.selwyn.carleton.comp3005.fitnessclub.config;
 
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -10,25 +9,26 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configurers.AbstractAuthenticationFilterConfigurer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import tech.selwyn.carleton.comp3005.fitnessclub.security.AuthenticationProviderImpl;
+import tech.selwyn.carleton.comp3005.fitnessclub.security.JwtAuthFilter;
 import tech.selwyn.carleton.comp3005.fitnessclub.service.UserDetailsServiceImpl;
 
 @Configuration
 @EnableMethodSecurity
-@EnableWebSecurity
 @AllArgsConstructor
 public class SecurityConfig {
 
-    public AuthenticationProviderImpl authenticationProvider;
+    private AuthenticationProviderImpl authenticationProvider;
     private UserDetailsServiceImpl userDetailsService;
+    private final JwtAuthFilter jwtAuthFilter;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -44,16 +44,20 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             .csrf(AbstractHttpConfigurer::disable)
+                .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+
             .authorizeHttpRequests(auth -> auth
                     .requestMatchers("/auth/**").permitAll()
+                    .requestMatchers("/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**").permitAll()
                     .requestMatchers("/api/common/**").permitAll()
                     .requestMatchers("/api/member/**").hasRole("MEMBER")
                     .requestMatchers("/api/trainer/**").hasAnyRole("ADMIN", "TRAINER")
                     .requestMatchers("/api/admin/**").hasRole("ADMIN")
                     .anyRequest()
-                    .authenticated()
+                    .permitAll()
             )
-            .formLogin(AbstractAuthenticationFilterConfigurer::permitAll)
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+            //.formLogin(AbstractAuthenticationFilterConfigurer::permitAll)
             .logout(LogoutConfigurer::permitAll);
 
         return http.build();

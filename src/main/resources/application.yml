@@ -1,3 +1,7 @@
+jwt:
+  secret: "iYCjUdNssmFaDDcrGw6+SehQ0X3tiKZtjG1MFNb/HVo/ewndia3mNTbxS1Qxrgkq1Ggmzc1cYUUPmClCA5gj2A=="
+  expiration-ms: 86400000
+
 spring:
   application:
     name: FitnessClub
@@ -11,10 +15,6 @@ spring:
     hibernate:
       ddl-auto: update # Set to "validate" for submission (requires generating liquibase changelog!!!)
     show-sql: true
-
-  security:
-    user:
-      name: user
-      password: user
 server:
   port: 8080
+  address: 0.0.0.0

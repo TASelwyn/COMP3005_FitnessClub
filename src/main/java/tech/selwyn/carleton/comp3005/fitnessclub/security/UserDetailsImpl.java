@@ -22,6 +22,10 @@ public class UserDetailsImpl implements UserDetails {
         return List.of(new SimpleGrantedAuthority(prefixedRole));
     }
 
+    public Account getAccount() {
+        return this.account;
+    }
+
     public String getEmail() { return account.getEmail(); }
     public Long getAccountId() { return account.getAccountId(); }
     @Override
