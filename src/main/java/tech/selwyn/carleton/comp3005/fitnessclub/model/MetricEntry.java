@@ -8,8 +8,8 @@ import java.time.Instant;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @Data
+@Builder
 @Table(name = "metric_entries")
 public class MetricEntry {
     @Id
