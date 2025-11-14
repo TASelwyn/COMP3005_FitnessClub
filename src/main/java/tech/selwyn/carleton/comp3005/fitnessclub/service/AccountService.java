@@ -28,7 +28,6 @@ public class AccountService {
 
         Account newAccount = new Account();
         newAccount.setEmail(email);
-
         newAccount.setFirstName(firstName);
         newAccount.setLastName(lastName);
         newAccount.setPasswordHash(encoder.encode(password));
