@@ -1,2 +1,30 @@
 databaseChangeLog:
--
+  - changeSet:
+      id: insert-initial-metrics
+      author: TASelwyn
+      changes:
+        - insert:
+            tableName: metrics
+            columns:
+              - column:
+                  name: description
+                  value: "A resting persons heart rate"
+              - column:
+                  name: name
+                  value: "Heartrate"
+              - column:
+                  name: unit
+                  value: "bpm"
+
+        - insert:
+            tableName: metrics
+            columns:
+              - column:
+                  name: description
+                  value: "A persons weight in kg"
+              - column:
+                  name: name
+                  value: "Weight"
+              - column:
+                  name: unit
+                  value: "kg"
