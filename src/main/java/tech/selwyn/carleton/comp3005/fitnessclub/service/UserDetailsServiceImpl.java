@@ -1,6 +1,7 @@
 package tech.selwyn.carleton.comp3005.fitnessclub.service;
 
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -25,11 +26,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
         List<SimpleGrantedAuthority> authorities = List.of(new SimpleGrantedAuthority(acc.getRole()));
 
-        return new UserDetailsImpl(acc);
-        /*return User.builder()
+        //return new UserDetailsImpl(acc);
+        return User.builder()
                 .username(acc.getEmail())
                 .password(acc.getPasswordHash())
                 .authorities(authorities)
-                .build();*/
+                .build();
     }
 }

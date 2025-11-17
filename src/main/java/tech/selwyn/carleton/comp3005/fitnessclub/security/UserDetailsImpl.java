@@ -1,5 +1,7 @@
 package tech.selwyn.carleton.comp3005.fitnessclub.security;
 
+import lombok.Builder;
+import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -8,6 +10,8 @@ import tech.selwyn.carleton.comp3005.fitnessclub.model.Account;
 import java.util.Collection;
 import java.util.List;
 
+@Getter
+@Builder
 public class UserDetailsImpl implements UserDetails {
 
     private final Account account;
@@ -20,10 +24,6 @@ public class UserDetailsImpl implements UserDetails {
         String role = account.getRole();
         String prefixedRole = role.startsWith("ROLE_") ? role : "ROLE_" + role;
         return List.of(new SimpleGrantedAuthority(prefixedRole));
-    }
-
-    public Account getAccount() {
-        return this.account;
     }
 
     public String getEmail() { return account.getEmail(); }
