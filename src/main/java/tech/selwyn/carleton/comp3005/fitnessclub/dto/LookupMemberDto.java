@@ -1,9 +1,10 @@
 package tech.selwyn.carleton.comp3005.fitnessclub.dto;
 
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 
 public record LookupMemberDto(
         @NotBlank String name,
-        @NotBlank int limit,
-        @NotBlank int offset
+        @Min(0) int limit,
+        @Min(0) int offset
 ) {}
