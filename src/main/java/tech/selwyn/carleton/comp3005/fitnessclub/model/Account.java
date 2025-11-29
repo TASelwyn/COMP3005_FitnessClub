@@ -3,18 +3,24 @@ package tech.selwyn.carleton.comp3005.fitnessclub.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+import java.util.Arrays;
 
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Data
+@Getter
 @Table(name = "accounts")
 public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "account_id")
+
+
     private Long accountId;
 
     @Column(nullable = false)
@@ -31,6 +37,10 @@ public class Account {
 
     @Column(nullable = false)
     private String role;
+
+    // List of Goals for this account
+    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Goal> goals =  new ArrayList<>();
 
     public Map<String, Object> toSummary() {
         return Map.of(

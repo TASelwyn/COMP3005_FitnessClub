@@ -10,6 +10,7 @@ import tech.selwyn.carleton.comp3005.fitnessclub.repository.MetricEntryRepositor
 import tech.selwyn.carleton.comp3005.fitnessclub.repository.MetricRepository;
 
 import java.time.Instant;
+import java.util.List;
 
 @Service
 public class MetricService {
@@ -37,4 +38,24 @@ public class MetricService {
 
         entryRepo.save(entry);
     }
+
+    @Transactional
+    public List<MetricEntry> getMetricHistory(Long accountId) {
+        Account acc = accRepo.findById(accountId)
+                .orElseThrow(() -> new IllegalArgumentException("Unable to find member"));
+        return entryRepo.findByAccount_AccountId(acc.getAccountId());
+    }
+
+    @Transactional
+    public MetricEntry getLatestMetric(Long accountId, Long metricId) {
+        return entryRepo.findTopByAccount_AccountIdAndMetric_MetricIdOrderByTimestampDesc(accountId, metricId)
+                .orElse(null);
+    }
+
+    public List<Metric> getAllMetrics() {
+        return metricRepo.findAll();
+    }
+
+
+
 }
