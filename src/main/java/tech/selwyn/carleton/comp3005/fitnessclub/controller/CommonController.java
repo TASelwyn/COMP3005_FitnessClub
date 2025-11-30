@@ -9,6 +9,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import tech.selwyn.carleton.comp3005.fitnessclub.dto.UpdateProfileDto;
+import tech.selwyn.carleton.comp3005.fitnessclub.model.Goal;
 import tech.selwyn.carleton.comp3005.fitnessclub.security.UserDetailsImpl;
 import tech.selwyn.carleton.comp3005.fitnessclub.service.AccountService;
 import tech.selwyn.carleton.comp3005.fitnessclub.service.GoalService;
@@ -48,6 +49,9 @@ public class CommonController {
         accountService.updatePersonalInfo(user.getAccountId(), req.firstName(), req.lastName());
 
         // Update goal
+        Goal primaryGoal = goalService.getPrimaryGoal(user.getAccountId());
+
+
 
 
         return ResponseEntity.ok(Map.of(
