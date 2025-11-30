@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.Instant;
+import java.util.Map;
 
 @Entity
 @NoArgsConstructor
@@ -16,12 +17,6 @@ public class MetricEntry {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long entryId;
 
-    @Column(nullable = false)
-    private Double value;
-
-    @Column(nullable = false)
-    private Instant timestamp;
-
     @ManyToOne
     @JoinColumn(name = "metric_id", nullable = false)
     private Metric metric;
@@ -29,4 +24,19 @@ public class MetricEntry {
     @ManyToOne
     @JoinColumn(name = "account_id", nullable = false)
     private Account account;
+
+    @Column(nullable = false)
+    private Double value;
+
+    @Column(nullable = false)
+    private Instant timestamp;
+
+    public Map<String, Object> toSummary() {
+        return Map.of(
+                "metric", metric.getName(),
+                "unit", metric.getUnit(),
+                "value", value,
+                "timestamp", timestamp
+        );
+    }
 }

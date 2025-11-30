@@ -13,7 +13,6 @@ import lombok.NoArgsConstructor;
 public class Room {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "room_id")
     private Long roomId;
 
     @Column(nullable = false, unique = true)

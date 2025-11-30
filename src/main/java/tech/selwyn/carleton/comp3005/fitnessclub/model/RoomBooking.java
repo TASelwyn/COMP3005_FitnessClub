@@ -23,11 +23,12 @@ public class RoomBooking {
     @JoinColumn(name = "room_id", nullable = false)
     private Room room;
 
+    @ManyToOne
+    @JoinColumn(name = "account_id", nullable = false)
+    private Account booker;
+
     private Instant startTime;
 
     private Instant endTime;
 
-    @ManyToOne
-    @JoinColumn(name = "account_id", nullable = false)
-    private Account booker;
 }

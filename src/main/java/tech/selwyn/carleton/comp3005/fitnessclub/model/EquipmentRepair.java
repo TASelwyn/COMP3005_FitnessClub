@@ -17,20 +17,19 @@ import java.time.Instant;
 public class EquipmentRepair {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "repair_id")
     private Long repairId;
 
     @ManyToOne
     @JoinColumn(name = "equipment_issue_id", nullable = false)
     private EquipmentIssue issue;
 
-    @Column(nullable = false)
-    private String notes;
+    @ManyToOne
+    @JoinColumn(name = "account_id", nullable = false)
+    private Account repaired_by;
 
     @Column(nullable = false)
     private Instant repaired_at;
 
-    @ManyToOne
-    @JoinColumn(name = "account_id", nullable = false)
-    private Account repaired_by;
+    @Column(nullable = false)
+    private String notes;
 }

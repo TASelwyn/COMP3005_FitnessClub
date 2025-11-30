@@ -1,6 +1,7 @@
 package tech.selwyn.carleton.comp3005.fitnessclub.controller;
 
 import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -18,16 +19,12 @@ import tech.selwyn.carleton.comp3005.fitnessclub.service.RoomService;
 import java.util.Map;
 
 @RestController
+@AllArgsConstructor
 @RequestMapping("/api/admin")
 public class AdminController {
 
     private final RoomService roomService;
     private final EquipmentService equipmentService;
-
-    public AdminController(RoomService roomService, EquipmentService equipmentService) {
-        this.roomService = roomService;
-        this.equipmentService = equipmentService;
-    }
 
     @PostMapping("/bookRoom")
     public ResponseEntity<?> bookRoom(@AuthenticationPrincipal UserDetailsImpl user, @Valid @RequestBody RoomBookingDto req) {

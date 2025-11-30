@@ -1,6 +1,7 @@
 package tech.selwyn.carleton.comp3005.fitnessclub.service;
 
 import jakarta.transaction.Transactional;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import tech.selwyn.carleton.comp3005.fitnessclub.model.*;
 import tech.selwyn.carleton.comp3005.fitnessclub.repository.*;
@@ -8,19 +9,12 @@ import tech.selwyn.carleton.comp3005.fitnessclub.repository.*;
 import java.time.Instant;
 
 @Service
+@AllArgsConstructor
 public class EquipmentService {
     private final AccountRepository accRepo;
     private final EquipmentRepository equipmentRepo;
     private final EquipmentIssueRepository equipmentIssueRepo;
     private final EquipmentRepairRepository equipmentRepairRepo;
-
-
-    public EquipmentService(AccountRepository accRepo, EquipmentRepository equipmentRepo, EquipmentIssueRepository equipmentIssueRepo, EquipmentRepairRepository equipmentRepairRepo) {
-        this.accRepo = accRepo;
-        this.equipmentRepo = equipmentRepo;
-        this.equipmentIssueRepo = equipmentIssueRepo;
-        this.equipmentRepairRepo = equipmentRepairRepo;
-    }
 
     /*
     Equipment Maintenance: Log issues, track repair status, associate with room/equipment

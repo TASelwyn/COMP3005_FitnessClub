@@ -4,15 +4,12 @@ import jakarta.transaction.Transactional;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import tech.selwyn.carleton.comp3005.fitnessclub.dto.UpdateProfileDto;
-import tech.selwyn.carleton.comp3005.fitnessclub.model.Goal;
 import tech.selwyn.carleton.comp3005.fitnessclub.model.Account;
 import tech.selwyn.carleton.comp3005.fitnessclub.model.RoleType;
 import tech.selwyn.carleton.comp3005.fitnessclub.repository.AccountRepository;
 
-import java.time.Instant;
 import java.util.List;
 import java.util.Map;
-import java.util.Arrays;
 
 @Service
 public class AccountService {
@@ -43,24 +40,6 @@ public class AccountService {
     public List<Map<String, Object>> lookupMember(String name) {
         return accRepo.searchMembersByName(name).stream()
                 .map(Account::toSummary)
-                .toList();
-    }
-
-    // Fetch member account
-    public Account getAccountById(Long accountId) {
-        return accRepo.findById(accountId)
-                .orElseThrow(() -> new IllegalArgumentException("Member not found"));
-    }
-
-    // Fetch active goals for dashboard
-    public List<Goal> getActiveGoals(Long accountId) {
-        Account account = getAccountById(accountId);
-        List<Goal> goals = account.getGoals();
-
-        Instant now = Instant.now();
-
-        return goals.stream()
-                .filter(goal -> now.isBefore(goal.getTargetDate()))
                 .toList();
     }
 

@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.Instant;
-import java.util.List;
+import java.util.Map;
 
 @Entity
 @Builder
@@ -16,15 +16,21 @@ import java.util.List;
 public class Goal {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "goal_id")
-
     private Long goalId;
+
+    @ManyToOne
+    @JoinColumn(name = "metric_id", nullable = false)
+    private Metric metric;
+
+    @ManyToOne
+    @JoinColumn(name = "account_id", nullable = false)
+    private Account account;
 
     @Column(nullable = false)
     private String title;
 
     @Column(nullable = false)
-    private double targetValue;
+    private Double targetValue;
 
     @Column(nullable = false)
     private Instant startDate;
@@ -32,7 +38,14 @@ public class Goal {
     @Column(nullable = false)
     private Instant targetDate;
 
-    @ManyToOne
-    @JoinColumn(name = "account_id", nullable = false)
-    private Account account;
+    public Map<String, Object> toSummary() {
+        return Map.of(
+                "goalId", goalId,
+                "title", title,
+                "targetValue", targetValue,
+                "startDate", startDate,
+                "targetDate", targetDate
+        );
+    }
+
 }
