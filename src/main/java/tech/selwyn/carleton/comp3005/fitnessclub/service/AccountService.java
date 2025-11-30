@@ -4,10 +4,10 @@ import jakarta.transaction.Transactional;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import tech.selwyn.carleton.comp3005.fitnessclub.dto.UpdateProfileDto;
-import tech.selwyn.carleton.comp3005.fitnessclub.model.Goal;
-import tech.selwyn.carleton.comp3005.fitnessclub.model.Account;
-import tech.selwyn.carleton.comp3005.fitnessclub.model.RoleType;
+import tech.selwyn.carleton.comp3005.fitnessclub.model.*;
 import tech.selwyn.carleton.comp3005.fitnessclub.repository.AccountRepository;
+import tech.selwyn.carleton.comp3005.fitnessclub.repository.MetricEntryRepository;
+import tech.selwyn.carleton.comp3005.fitnessclub.repository.MetricRepository;
 
 import java.time.Instant;
 import java.util.List;
@@ -18,11 +18,17 @@ import java.util.Arrays;
 public class AccountService {
     private final AccountRepository accRepo;
     private final PasswordEncoder encoder;
+    private final MetricRepository metricRepo;
+    private final MetricEntryRepository entryRepo;
 
-    public AccountService(AccountRepository accRepo, PasswordEncoder encoder) {
+    public AccountService(AccountRepository accRepo, PasswordEncoder encoder, MetricRepository metricRepo, MetricEntryRepository entryRepo) {
         this.accRepo = accRepo;
         this.encoder = encoder;
+        this.metricRepo = metricRepo;
+        this.entryRepo = entryRepo;
     }
+
+
 
     @Transactional
     public Account register(String firstName, String lastName, String email, String password) {
@@ -65,40 +71,70 @@ public class AccountService {
                 .toList();
     }
 
-//    @Transactional
-//    public void updateProfile(Long accountId, UpdateProfileDto dto) {
-//        Account account = accRepo.findById(accountId)
-//                .orElseThrow(() -> new IllegalArgumentException("Member not found"));
-//
-//        if (dto.firstName() != null) account.setFirstName(dto.firstName());
-//        if (dto.lastName() != null) account.setLastName(dto.lastName());
-//        if (dto.email() != null) account.setEmail(dto.email());
-//
-//        // Update goal if provided
-//        if (dto.goalTitle() != null && dto.goalTargetValue() != null && dto.goalTargetDate() != null) {
-//            Goal goal = Goal.builder()
-//                    .title(dto.goalTitle())
-//                    .targetValue(dto.goalTargetValue())
-//                    .startDate(Instant.now())
-//                    .targetDate(dto.goalTargetDate())
-//                    .account(account)
-//                    .build();
-//            account.getGoals().add(goal);
-//        }
-//
-//        accRepo.save(account); // saves account and goals (cascade)
-//    }
+
 @Transactional
-public void updatePersonalInfo(Long accountId, UpdateProfileDto req) {
+public void updateProfile(
+        Long accountId, // to load account
+        String firstName, //  for basic profile changes
+        String lastName,
+        String email,
+        String goalTitle, // for goals
+        Double goalTargetValue,
+        Instant goalTargetDate,
+        Long metricId,       // for new health metric
+        Double metricValue
+) {
+        // 1. load account
     Account acc = accRepo.findById(accountId)
             .orElseThrow(() -> new IllegalArgumentException("Account not found"));
 
-    if (req.firstName() != null) acc.setFirstName(req.firstName());
-    if (req.lastName() != null) acc.setLastName(req.lastName());
-    if (req.email() != null) acc.setEmail(req.email());
 
+    // 2. Update personal info
+
+    if (firstName != null) acc.setFirstName(firstName);
+    if (lastName != null) acc.setLastName(lastName);
+    if (email != null) acc.setEmail(email);
+
+    // 3. Update goal info
+    boolean goalProvided = goalTitle != null || goalTargetValue != null || goalTargetDate != null;
+
+    if (goalProvided) {
+
+        Goal goal = acc.getGoals().stream().findFirst().orElse(null);
+
+        // If no goal exists then we are creating one
+        if (goal == null) {
+            goal = new Goal();
+            goal.setAccount(acc);
+            acc.getGoals().clear();
+            acc.getGoals().add(goal);
+        }
+
+        // Update goal fields
+        if (goalTitle != null) goal.setTitle(goalTitle);
+        if (goalTargetValue != null) goal.setTargetValue(goalTargetValue);
+        if (goalTargetDate != null) goal.setTargetDate(goalTargetDate);
+    }
+
+    // 4. log new metrics
+    if (metricId != null && metricValue != null) {
+        Metric metric = metricRepo.findByMetricId(metricId)
+                .orElseThrow(() -> new IllegalArgumentException("Unknown metric"));
+
+        MetricEntry entry = MetricEntry.builder()
+                .account(acc)
+                .metric(metric)
+                .value(metricValue)
+                .timestamp(Instant.now())
+                .build();
+
+        entryRepo.save(entry);
+    }
+
+    // One save handles everything because of cascade
     accRepo.save(acc);
 }
+
 
 
 }

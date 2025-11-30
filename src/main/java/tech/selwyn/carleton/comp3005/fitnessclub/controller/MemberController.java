@@ -102,10 +102,6 @@ public class MemberController {
         response.put("latestMetrics", latestMetrics);
         response.put("activeGoals", activeGoals);
 
-        // i still have to implement Add past class count and upcoming sessions once
-        // scheduling entities are implemented i'm assigning it to 0 for now
-        //int pastClassCount = 0;
-        //int upcomingSessions = 0;
         var nextThree = upcoming.stream()
                 .sorted((a, b) -> a.getStartTime().compareTo(b.getStartTime()))
                 .limit(3)
@@ -128,7 +124,18 @@ public class MemberController {
             @AuthenticationPrincipal UserDetailsImpl userDetails,
             @RequestBody UpdateProfileDto req
     ) {
-        accService.updatePersonalInfo(userId, dto);
+        accService.updateProfile(
+                userDetails.getAccountId(),
+                req.firstName(),
+                req.lastName(),
+                req.email(),
+                req.goalTitle(),
+                req.goalTargetValue(),
+                req.goalTargetDate(),
+                req.metricId(),        // Add these fields to UpdateProfileDto
+                req.metricValue()
+        );
+
         return ResponseEntity.noContent().build();
     }
 

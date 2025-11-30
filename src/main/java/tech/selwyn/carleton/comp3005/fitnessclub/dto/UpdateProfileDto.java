@@ -7,8 +7,14 @@ import java.time.Instant;
 public record UpdateProfileDto(
         @Size(max = 50) String firstName,
         @Size(max = 50) String lastName,
-        String email // optional
-//        String goalTitle,
-//        Double goalTargetValue,
-//        Instant goalTargetDate
+        String email, // optional
+
+        // Goal fields
+        String goalTitle,
+        Double goalTargetValue,
+        Instant goalTargetDate,
+
+        // Metric logging fields
+        Long metricId,
+        Double metricValue
 ) {}
