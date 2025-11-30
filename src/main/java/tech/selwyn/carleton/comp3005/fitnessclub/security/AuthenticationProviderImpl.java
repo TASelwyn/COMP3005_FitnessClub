@@ -9,7 +9,6 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
-import tech.selwyn.carleton.comp3005.fitnessclub.service.UserDetailsServiceImpl;
 
 @Component
 @AllArgsConstructor

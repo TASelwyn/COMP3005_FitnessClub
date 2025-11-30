@@ -1,4 +1,4 @@
-package tech.selwyn.carleton.comp3005.fitnessclub.service;
+package tech.selwyn.carleton.comp3005.fitnessclub.security;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
