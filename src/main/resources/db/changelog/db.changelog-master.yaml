@@ -71,3 +71,44 @@ databaseChangeLog:
               - column:
                   name: description
                   value: "A dedicated private one on one room for sessions"
+
+  - changeSet:
+      id: insert-initial-equipment
+      author: TASelwyn
+      changes:
+        - insert:
+            tableName: equipment
+            columns:
+              - column:
+                  name: name
+                  value: "Floor sweeper"
+              - column:
+                  name: description
+                  value: "A generic floor sweeper, probably been used for decades"
+              - column:
+                  name: room_id
+                  value: "1"
+        - insert:
+            tableName: equipment
+            columns:
+              - column:
+                  name: name
+                  value: "Rowing Machine"
+              - column:
+                  name: description
+                  value: "Cardio equipment for simulating rowing (Strength/Endurance)"
+              - column:
+                  name: room_id
+                  value: "1"
+        - insert:
+            tableName: equipment
+            columns:
+              - column:
+                  name: name
+                  value: "Dumbbell Set"
+              - column:
+                  name: description
+                  value: "A set of weights for strength training"
+              - column:
+                  name: room_id
+                  value: "1"

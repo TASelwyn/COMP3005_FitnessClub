@@ -2,6 +2,7 @@ package tech.selwyn.carleton.comp3005.fitnessclub.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -9,21 +10,21 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@Table(name = "rooms")
-public class Room {
+@Builder
+@Table(name = "equipment")
+public class Equipment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "room_id")
-    private Long roomId;
+    @Column(name = "equipment_id")
+    private Long equipmentId;
 
-    @Column(nullable = false, unique = true)
+    @ManyToOne
+    @JoinColumn(name = "room_id", nullable = false)
+    private Room room;
+
+    @Column(nullable = false)
     private String name;
 
     @Column(nullable = false)
     private String description;
-
-    @Override
-    public String toString() {
-        return roomId + name;
-    }
 }

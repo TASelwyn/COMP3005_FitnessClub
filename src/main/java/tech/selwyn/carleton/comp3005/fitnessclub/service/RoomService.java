@@ -19,6 +19,9 @@ public class RoomService {
         this.roomBookingRepo = roomBookingRepo;
     }
 
+    /*
+    Room Booking: Assign rooms for sessions or classes. Prevent double-booking
+    */
     @Transactional
     public RoomBooking bookRoom(Long accountId, Long roomId, Instant startTime, Instant endTime) {
         Account acc = accRepo.findById(accountId).orElseThrow(() -> new IllegalArgumentException("Unable to find member"));
@@ -42,4 +45,14 @@ public class RoomService {
 
         return roomBookingRepo.save(booking);
     }
+
+    @Transactional
+    public void assignBookingToSession(Long bookingId, Long sessionId) {
+        RoomBooking roomBooking = roomBookingRepo.findByBookingId(bookingId).orElseThrow(() -> new IllegalArgumentException("Booking not found"));
+
+        // TODO ASSIGN BOOKING TO SESSION
+        // Session session = sessionRepo.findBySessionId(sessionId).orElseThrow(() -> new IllegalArgumentException("Session not found"));
+        // UPDATE ENTITY TO STORE: roomBooking.getBookingId()
+    }
+
 }
