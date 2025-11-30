@@ -37,7 +37,7 @@ public class GoalService {
     public Goal getPrimaryGoal(Long accountId) {
         Account account = accRepo.findByAccountId(accountId).orElseThrow(() -> new IllegalArgumentException("Unable to find member"));
 
-        HealthFocus focus = healthFocusRepo.findByAccountId(accountId).orElseGet(() -> {
+        HealthFocus focus = healthFocusRepo.findByAccountAccountId(accountId).orElseGet(() -> {
             HealthFocus newFocus = HealthFocus.builder()
                     .account(account)
                     .primaryGoal(null)
