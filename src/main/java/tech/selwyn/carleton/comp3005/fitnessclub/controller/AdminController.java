@@ -32,7 +32,7 @@ public class AdminController {
 
         return ResponseEntity.ok(Map.of(
                 "message", "Successfully booked room for session",
-                "bookingId", booking.getBookingId()));
+                "bookingId", booking.getId()));
     }
 
     @PostMapping("/assignBookingToSession")
@@ -51,7 +51,7 @@ public class AdminController {
 
         return ResponseEntity.ok(Map.of(
                 "message", "Successfully logged issue",
-                "equipmentIssueId", equipmentIssue.getIssueId()));
+                "equipmentIssueId", equipmentIssue.getId()));
     }
 
     @PostMapping("/logRepair")
@@ -60,6 +60,6 @@ public class AdminController {
 
         return ResponseEntity.ok(Map.of(
                 "message", "Successfully logged repair",
-                "equipmentRepairId", equipmentRepair.getRepairId()));
+                "equipmentRepairId", equipmentRepair.getId()));
     }
 }

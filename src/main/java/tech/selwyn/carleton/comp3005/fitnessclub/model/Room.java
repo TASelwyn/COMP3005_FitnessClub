@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 public class Room {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long roomId;
+    private Long id;
 
     @Column(nullable = false, unique = true)
     private String name;
@@ -23,6 +23,6 @@ public class Room {
 
     @Override
     public String toString() {
-        return roomId + name;
+        return id + name;
     }
 }

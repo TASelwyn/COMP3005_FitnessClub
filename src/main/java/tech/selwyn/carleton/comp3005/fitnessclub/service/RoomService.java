@@ -22,13 +22,13 @@ public class RoomService {
     public RoomBooking bookRoom(Long accountId, Long roomId, Instant startTime, Instant endTime) {
         Account acc = accRepo.findById(accountId).orElseThrow(() -> new IllegalArgumentException("Unable to find member"));
 
-        Room room = roomRepo.findByRoomId(roomId).orElseThrow(() -> new IllegalArgumentException("Room not found"));
+        Room room = roomRepo.findById(roomId).orElseThrow(() -> new IllegalArgumentException("Room not found"));
 
         if (startTime.isAfter(endTime)) {
             throw new IllegalArgumentException("Invalid start and end time");
         }
 
-        if (roomBookingRepo.existsByRoomRoomIdAndStartTimeLessThanAndEndTimeGreaterThan(roomId, endTime, startTime)) {
+        if (roomBookingRepo.existsByRoomIdAndStartTimeLessThanAndEndTimeGreaterThan(roomId, endTime, startTime)) {
             throw new IllegalStateException("Room is already booked during the selected time period. Overlaps are not allowed.");
         }
 
@@ -44,7 +44,7 @@ public class RoomService {
 
     @Transactional
     public void assignBookingToSession(Long bookingId, Long sessionId) {
-        RoomBooking roomBooking = roomBookingRepo.findByBookingId(bookingId).orElseThrow(() -> new IllegalArgumentException("Booking not found"));
+        RoomBooking roomBooking = roomBookingRepo.findById(bookingId).orElseThrow(() -> new IllegalArgumentException("Booking not found"));
 
         // TODO ASSIGN BOOKING TO SESSION
         // Session session = sessionRepo.findBySessionId(sessionId).orElseThrow(() -> new IllegalArgumentException("Session not found"));

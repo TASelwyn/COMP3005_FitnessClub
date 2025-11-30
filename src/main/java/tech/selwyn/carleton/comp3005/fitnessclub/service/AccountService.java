@@ -17,7 +17,6 @@ public class AccountService {
     private final AccountRepository accRepo;
     private final PasswordEncoder encoder;
 
-    @Transactional
     public Account register(String firstName, String lastName, String email, String password) {
         if (accRepo.findByEmail(email).isPresent()) {
             throw new IllegalArgumentException("Email already exists");
@@ -39,17 +38,16 @@ public class AccountService {
                 .toList();
     }
 
-@Transactional
-public void updatePersonalInfo(Long accountId, String firstName, String lastName) {
-    Account acc = accRepo.findById(accountId)
-            .orElseThrow(() -> new IllegalArgumentException("Account not found"));
+    @Transactional
+    public void updatePersonalInfo(Long accountId, String firstName, String lastName) {
+        Account acc = accRepo.findById(accountId)
+                .orElseThrow(() -> new IllegalArgumentException("Account not found"));
 
-    if (firstName != null) acc.setFirstName(firstName);
-    if (lastName != null) acc.setLastName(lastName);
+        if (firstName != null) acc.setFirstName(firstName);
+        if (lastName != null) acc.setLastName(lastName);
 
-
-    accRepo.save(acc);
-}
+        accRepo.save(acc);
+    }
 
 
 }

@@ -6,5 +6,5 @@ import tech.selwyn.carleton.comp3005.fitnessclub.model.Room;
 import java.util.Optional;
 
 public interface RoomRepository extends JpaRepository<Room, Long> {
-    Optional<Room> findByRoomId(Long roomId);
+
 }

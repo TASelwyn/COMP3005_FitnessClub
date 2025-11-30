@@ -16,7 +16,7 @@ public class Equipment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "equipment_id")
-    private Long equipmentId;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "room_id", nullable = false)

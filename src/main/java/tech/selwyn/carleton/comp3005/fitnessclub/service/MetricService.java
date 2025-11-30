@@ -25,7 +25,7 @@ public class MetricService {
     Health History: Log multiple metric entries; do not overwrite. Must support time-stamped entries.
     */
     public void logMetric(Long accountId, Long metricId, Double value) {
-        Metric metric = metricRepo.findByMetricId(metricId).orElseThrow(() -> new IllegalArgumentException("Unknown metric"));
+        Metric metric = metricRepo.findById(metricId).orElseThrow(() -> new IllegalArgumentException("Unknown metric"));
         Account acc = accRepo.findById(accountId).orElseThrow(() -> new IllegalArgumentException("Unable to find member"));
 
         MetricEntry entry = MetricEntry.builder()
@@ -50,7 +50,7 @@ public class MetricService {
 
     @Transactional
     public MetricEntry getLatestMetric(Long accountId, Long metricId) {
-        return entryRepo.findTopByAccountIdAndMetric_MetricIdOrderByTimestampDesc(accountId, metricId)
+        return entryRepo.findTopByAccountIdAndMetricIdOrderByTimestampDesc(accountId, metricId)
                 .orElse(null);
     }
 
@@ -58,6 +58,8 @@ public class MetricService {
         return metricRepo.findAll();
     }
 
-
-
+    public Metric getMetric(Long metricId) {
+        return metricRepo.findById(metricId)
+                .orElseThrow(() -> new IllegalArgumentException("Unable to find metric"));
+    }
 }

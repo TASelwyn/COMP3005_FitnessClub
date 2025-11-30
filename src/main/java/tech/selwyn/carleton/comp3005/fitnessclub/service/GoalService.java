@@ -37,13 +37,14 @@ public class GoalService {
     public Goal getPrimaryGoal(Long accountId) {
         Account account = accRepo.findById(accountId).orElseThrow(() -> new IllegalArgumentException("Unable to find member"));
 
-        HealthFocus focus = healthFocusRepo.findByAccountId(accountId).orElseGet(() -> {
-            HealthFocus newFocus = HealthFocus.builder()
-                    .account(account)
-                    .primaryGoal(null)
-                    .build();
+        HealthFocus focus = healthFocusRepo.findById(accountId).orElseGet(
+                () -> {
+                    HealthFocus newFocus = HealthFocus.builder()
+                            .account(account)
+                            .primaryGoal(null)
+                            .build();
 
-            return healthFocusRepo.save(newFocus);
+                    return healthFocusRepo.save(newFocus);
         });
 
         return focus.getPrimaryGoal();

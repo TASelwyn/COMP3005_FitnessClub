@@ -10,9 +10,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import tech.selwyn.carleton.comp3005.fitnessclub.dto.UpdateProfileDto;
 import tech.selwyn.carleton.comp3005.fitnessclub.model.Goal;
+import tech.selwyn.carleton.comp3005.fitnessclub.model.Metric;
 import tech.selwyn.carleton.comp3005.fitnessclub.security.UserDetailsImpl;
 import tech.selwyn.carleton.comp3005.fitnessclub.service.AccountService;
 import tech.selwyn.carleton.comp3005.fitnessclub.service.GoalService;
+import tech.selwyn.carleton.comp3005.fitnessclub.service.MetricService;
 
 import java.util.List;
 import java.util.Map;
@@ -24,6 +26,7 @@ import java.util.stream.Collectors;
 public class CommonController {
     private final AccountService accountService;
     private final GoalService goalService;
+    private final MetricService metricService;
 
     @GetMapping("/profile")
     public Map<String, Object> getCurrentUser(@AuthenticationPrincipal UserDetailsImpl user) {
@@ -50,6 +53,23 @@ public class CommonController {
 
         // Update goal
         Goal primaryGoal = goalService.getPrimaryGoal(user.getAccount().getId());
+        if (!req.goalTitle().equals(primaryGoal.getTitle())) {
+            primaryGoal.setTitle(req.goalTitle());
+        }
+        if (!req.goalTargetValue().equals(primaryGoal.getTargetValue())) {
+            primaryGoal.setTargetValue(req.goalTargetValue());
+        }
+        if (!req.goalTargetDate().equals(primaryGoal.getTargetDate())) {
+            primaryGoal.setTargetDate(req.goalTargetDate());
+        }
+
+        // Update metric under primaryGoal
+        if (!req.metricId().equals(primaryGoal.getMetric().getId())) {
+            Metric metric = metricService.getMetric(req.metricId());
+            primaryGoal.setMetric(metric);
+        }
+
+
 
 
         return ResponseEntity.ok(Map.of(

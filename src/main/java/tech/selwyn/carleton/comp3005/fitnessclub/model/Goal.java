@@ -16,7 +16,7 @@ import java.util.Map;
 public class Goal {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long goalId;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "metric_id", nullable = false)
@@ -40,7 +40,7 @@ public class Goal {
 
     public Map<String, Object> toSummary() {
         return Map.of(
-                "goalId", goalId,
+                "goalId", id,
                 "title", title,
                 "targetValue", targetValue,
                 "startDate", startDate,

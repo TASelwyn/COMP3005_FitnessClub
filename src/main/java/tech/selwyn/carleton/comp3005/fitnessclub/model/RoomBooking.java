@@ -17,7 +17,7 @@ import java.time.Instant;
 public class RoomBooking {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long bookingId;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "room_id", nullable = false)

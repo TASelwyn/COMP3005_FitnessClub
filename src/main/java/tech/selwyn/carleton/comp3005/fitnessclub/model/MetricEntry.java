@@ -15,7 +15,7 @@ import java.util.Map;
 public class MetricEntry {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long entryId;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "metric_id", nullable = false)

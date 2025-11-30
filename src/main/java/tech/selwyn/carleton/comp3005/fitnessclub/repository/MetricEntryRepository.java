@@ -7,10 +7,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface MetricEntryRepository extends JpaRepository<MetricEntry, Long> {
-    Optional<MetricEntry> findByEntryId(Long entryId);
-
     List<MetricEntry> findByAccountIdOrderByTimestampDesc(Long accountId);
 
-    Optional<MetricEntry> findTopByAccountIdAndMetric_MetricIdOrderByTimestampDesc(Long accountId, Long metricId);
+    Optional<MetricEntry> findTopByAccountIdAndMetricIdOrderByTimestampDesc(Long accountId, Long metricId);
 
 }

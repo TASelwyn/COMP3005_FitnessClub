@@ -21,7 +21,6 @@ public class DashboardService {
     */
     @Transactional
     public Map<String, Object> getDashboard(Long accountId) {
-        // TODO FINISH/FIX THIS
         accRepo.findById(accountId).orElseThrow(() -> new IllegalArgumentException("Unable to find member"));
 
         Map<String, Object> response = new HashMap<>();
@@ -34,9 +33,9 @@ public class DashboardService {
 
         // Get all metrics defined in the system
         var latestMetrics = allMetrics.stream().map(metric -> {
-            var latestEntry = metricService.getLatestMetric(accountId, metric.getMetricId());
+            var latestEntry = metricService.getLatestMetric(accountId, metric.getId());
             return Map.of(
-                    "metricId", metric.getMetricId(),
+                    "metricId", metric.getId(),
                     "metricName", metric.getName(),
                     "unit", metric.getUnit(),
                     "latestValue", latestEntry != null ? latestEntry.getValue() : null,
@@ -50,15 +49,11 @@ public class DashboardService {
         response.put("latestMetrics", latestMetrics);
         response.put("activeGoals", activeGoals);
 
-        // i still have to implement Add past class count and upcoming sessions once
-        // scheduling entities are implemented i'm assigning it to 0 for now
-        //int pastClassCount = 0;
-        //int upcomingSessions = 0;
         var nextThree = upcoming.stream()
                 .sorted((a, b) -> a.getStartTime().compareTo(b.getStartTime()))
                 .limit(3)
                 .map(s -> Map.of(
-                        "sessionId", s.getSessionId(),
+                        "sessionId", s.getId(),
                         "trainerName", s.getTrainer().getFirstName() + " " + s.getTrainer().getLastName(),
                         "startTime", s.getStartTime(),
                         "endTime", s.getEndTime()

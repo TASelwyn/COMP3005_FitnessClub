@@ -36,9 +36,7 @@ public class Account {
         return Map.of(
                 "accountId", id,
                 "fullName", firstName + " " + lastName,
-                "email", email//,
-                //"goal", currentGoal != null ? currentGoal.toSummary() : null,
-                //"lastMetric", lastMetric != null ? lastMetric.toSummary() : null
+                "email", email
         );
     }
 }
