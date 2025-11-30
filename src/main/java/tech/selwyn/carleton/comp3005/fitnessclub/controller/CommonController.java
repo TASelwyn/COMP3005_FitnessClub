@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import tech.selwyn.carleton.comp3005.fitnessclub.dto.UpdateProfileDto;
 import tech.selwyn.carleton.comp3005.fitnessclub.security.UserDetailsImpl;
 import tech.selwyn.carleton.comp3005.fitnessclub.service.AccountService;
+import tech.selwyn.carleton.comp3005.fitnessclub.service.GoalService;
 
 import java.util.List;
 import java.util.Map;
@@ -21,6 +22,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/common")
 public class CommonController {
     private final AccountService accountService;
+    private final GoalService goalService;
 
     @GetMapping("/profile")
     public Map<String, Object> getCurrentUser(@AuthenticationPrincipal UserDetailsImpl user) {
@@ -42,7 +44,11 @@ public class CommonController {
 
     @PutMapping("/updateProfile")
     public ResponseEntity<?> updateProfile(@AuthenticationPrincipal UserDetailsImpl user, @Valid @RequestBody UpdateProfileDto req) {
-        accountService.updatePersonalInfo(user.getAccountId(), req);
+        // Update first/last Name
+        accountService.updatePersonalInfo(user.getAccountId(), req.firstName(), req.lastName());
+
+        // Update goal
+
 
         return ResponseEntity.ok(Map.of(
                 "status", "success"

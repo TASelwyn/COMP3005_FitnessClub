@@ -1,6 +1,7 @@
 package tech.selwyn.carleton.comp3005.fitnessclub.service;
 
 import jakarta.transaction.Transactional;
+import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import tech.selwyn.carleton.comp3005.fitnessclub.dto.UpdateProfileDto;
@@ -12,14 +13,10 @@ import java.util.List;
 import java.util.Map;
 
 @Service
+@AllArgsConstructor
 public class AccountService {
     private final AccountRepository accRepo;
     private final PasswordEncoder encoder;
-
-    public AccountService(AccountRepository accRepo, PasswordEncoder encoder) {
-        this.accRepo = accRepo;
-        this.encoder = encoder;
-    }
 
     @Transactional
     public Account register(String firstName, String lastName, String email, String password) {
@@ -43,37 +40,14 @@ public class AccountService {
                 .toList();
     }
 
-//    @Transactional
-//    public void updateProfile(Long accountId, UpdateProfileDto dto) {
-//        Account account = accRepo.findById(accountId)
-//                .orElseThrow(() -> new IllegalArgumentException("Member not found"));
-//
-//        if (dto.firstName() != null) account.setFirstName(dto.firstName());
-//        if (dto.lastName() != null) account.setLastName(dto.lastName());
-//        if (dto.email() != null) account.setEmail(dto.email());
-//
-//        // Update goal if provided
-//        if (dto.goalTitle() != null && dto.goalTargetValue() != null && dto.goalTargetDate() != null) {
-//            Goal goal = Goal.builder()
-//                    .title(dto.goalTitle())
-//                    .targetValue(dto.goalTargetValue())
-//                    .startDate(Instant.now())
-//                    .targetDate(dto.goalTargetDate())
-//                    .account(account)
-//                    .build();
-//            account.getGoals().add(goal);
-//        }
-//
-//        accRepo.save(account); // saves account and goals (cascade)
-//    }
 @Transactional
-public void updatePersonalInfo(Long accountId, UpdateProfileDto req) {
+public void updatePersonalInfo(Long accountId, String firstName, String lastName) {
     Account acc = accRepo.findById(accountId)
             .orElseThrow(() -> new IllegalArgumentException("Account not found"));
 
-    if (req.firstName() != null) acc.setFirstName(req.firstName());
-    if (req.lastName() != null) acc.setLastName(req.lastName());
-    if (req.email() != null) acc.setEmail(req.email());
+    if (firstName != null) acc.setFirstName(firstName);
+    if (lastName != null) acc.setLastName(lastName);
+
 
     accRepo.save(acc);
 }
