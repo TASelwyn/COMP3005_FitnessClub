@@ -63,8 +63,6 @@ public class EquipmentService {
 
     @Transactional
     public boolean hasIssueBeenRepaired(Long issueId) {
-        equipmentIssueRepo.findByIssueId(issueId).orElseThrow(() -> new IllegalArgumentException("Unable to find equipment issue"));
-
         return equipmentRepairRepo.findByIssueIssueId(issueId).isPresent();
     }
 }
