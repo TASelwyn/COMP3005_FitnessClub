@@ -28,3 +28,46 @@ databaseChangeLog:
               - column:
                   name: unit
                   value: "kg"
+  - changeSet:
+      id: insert-initial-rooms
+      author: TASelwyn
+      changes:
+        - insert:
+            tableName: rooms
+            columns:
+              - column:
+                  name: name
+                  value: "Gym A"
+              - column:
+                  name: description
+                  value: "The main gymnasium"
+
+        - insert:
+            tableName: rooms
+            columns:
+              - column:
+                  name: name
+                  value: "Private Room A"
+              - column:
+                  name: description
+                  value: "A dedicated private one on one room for sessions"
+
+        - insert:
+            tableName: rooms
+            columns:
+              - column:
+                  name: name
+                  value: "Private Room B"
+              - column:
+                  name: description
+                  value: "A dedicated private one on one room for sessions"
+
+        - insert:
+            tableName: rooms
+            columns:
+              - column:
+                  name: name
+                  value: "Private Room C"
+              - column:
+                  name: description
+                  value: "A dedicated private one on one room for sessions"
