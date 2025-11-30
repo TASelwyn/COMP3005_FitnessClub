@@ -49,7 +49,7 @@ public class RoomService {
 
         // TODO ASSIGN BOOKING TO SESSION
         // Session session = sessionRepo.findBySessionId(sessionId).orElseThrow(() -> new IllegalArgumentException("Session not found"));
-        // UPDATE ENTITY TO STORE: roomBooking.getBookingId()
+        // UPDATE Session's booking ID With: roomBooking.getBookingId()
     }
 
 }

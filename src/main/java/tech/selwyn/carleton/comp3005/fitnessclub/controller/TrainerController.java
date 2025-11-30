@@ -35,8 +35,8 @@ public class TrainerController {
     }
 
     @GetMapping("/getSchedule")
-    public ResponseEntity<?> getSchedule(@AuthenticationPrincipal UserDetailsImpl user) {
-        var schedule = sessionService.getSchedule(user.getAccount().getId());
+    public ResponseEntity<?> getScheduledSessions(@AuthenticationPrincipal UserDetailsImpl user) {
+        var schedule = sessionService.getScheduledSessions(user.getAccount().getId());
 
         return ResponseEntity.ok(Map.of(
                 "status", "success",

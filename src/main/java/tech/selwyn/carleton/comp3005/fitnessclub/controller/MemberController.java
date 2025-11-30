@@ -56,6 +56,7 @@ public class MemberController {
     public ResponseEntity<?> scheduleSession(@AuthenticationPrincipal UserDetailsImpl user, @Valid @RequestBody ScheduleSessionDto req) {
         var session = sessionService.scheduleSession(user.getAccount().getId(), req.trainerId(), req.startTime(), req.endTime());
 
+
         return ResponseEntity.ok(Map.of(
                 "status", "success",
                 "session", session
