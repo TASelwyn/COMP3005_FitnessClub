@@ -1,6 +1,5 @@
 package tech.selwyn.carleton.comp3005.fitnessclub.service;
 
-import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import tech.selwyn.carleton.comp3005.fitnessclub.repository.AccountRepository;
@@ -19,36 +18,22 @@ public class DashboardService {
     /*
     Dashboard: Show latest health stats, active goals, past class count, upcoming sessions.
     */
-    @Transactional
     public Map<String, Object> getDashboard(Long accountId) {
         accRepo.findById(accountId).orElseThrow(() -> new IllegalArgumentException("Unable to find member"));
 
         Map<String, Object> response = new HashMap<>();
 
-        var upcoming = sessionService.getUpcomingSessions(accountId);
-        var past = sessionService.getPastSessions(accountId);
-
-        // Fetch latest metric entries for this member
-        var allMetrics = metricService.getAllMetrics();
-
-        // Get all metrics defined in the system
-        var latestMetrics = allMetrics.stream().map(metric -> {
-            var latestEntry = metricService.getLatestMetric(accountId, metric.getId());
-            return Map.of(
-                    "metricId", metric.getId(),
-                    "metricName", metric.getName(),
-                    "unit", metric.getUnit(),
-                    "latestValue", latestEntry != null ? latestEntry.getValue() : null,
-                    "timestamp", latestEntry != null ? latestEntry.getTimestamp() : null
-            );
-        }).toList();
-
+        // "latest health stats, active goals"
+        var latestMetrics = metricService.getLatestMetricEntries(accountId);
         var activeGoals = goalService.getActiveGoals(accountId);
 
         // Adding metrics and goals in response
         response.put("latestMetrics", latestMetrics);
         response.put("activeGoals", activeGoals);
 
+        // "past class count, upcoming sessions."
+        var upcoming = sessionService.getUpcomingSessions(accountId);
+        var past = sessionService.getPastSessions(accountId);
         var nextThree = upcoming.stream()
                 .sorted((a, b) -> a.getStartTime().compareTo(b.getStartTime()))
                 .limit(3)

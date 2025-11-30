@@ -27,8 +27,10 @@ public class RoomBooking {
     @JoinColumn(name = "account_id", nullable = false)
     private Account booker;
 
+    @Column(nullable = false)
     private Instant startTime;
 
+    @Column(nullable = false)
     private Instant endTime;
 
 }

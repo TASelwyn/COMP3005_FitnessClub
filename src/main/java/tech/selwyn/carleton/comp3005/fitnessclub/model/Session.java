@@ -25,6 +25,10 @@ public class Session {
     @JoinColumn(name = "member_id", nullable = false)
     private Account member;
 
+    @ManyToOne
+    @JoinColumn(name = "booking_id")
+    private RoomBooking booking;
+
     @Column(nullable = false)
     private Instant startTime;
 

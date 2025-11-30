@@ -17,7 +17,7 @@ public class SessionService {
     private final SessionRepository sessionRepo;
     private final AccountRepository accRepo;
 
-    public void scheduleSession(Long memberId, Long trainerId, Instant start, Instant end) {
+    public Session scheduleSession(Long memberId, Long trainerId, Instant startTime, Instant endTime) {
         Account member = accRepo.findById(memberId)
                 .orElseThrow(() -> new IllegalArgumentException("Member not found"));
         Account trainer = accRepo.findById(trainerId)
@@ -26,12 +26,21 @@ public class SessionService {
         Session s = Session.builder()
                 .member(member)
                 .trainer(trainer)
-                .startTime(start)
-                .endTime(end)
+                .startTime(startTime)
+                .endTime(endTime)
                 .status("SCHEDULED")
                 .build();
 
-        sessionRepo.save(s);
+        return sessionRepo.save(s);
+    }
+
+    /*
+    Schedule View: See assigned PT sessions and classes.
+    */
+    public List<Session> getSchedule(Long memberId) {
+        // get all current/upcoming sessions and classes
+        // TODO DO THIS Make it return assigned PT Sessions/Classes
+        return sessionRepo.findByMemberIdAndStartTimeAfter(memberId, Instant.now());
     }
 
     public List<Session> getUpcomingSessions(Long memberId) {

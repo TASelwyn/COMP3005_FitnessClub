@@ -41,6 +41,7 @@ public class Goal {
     public Map<String, Object> toSummary() {
         return Map.of(
                 "goalId", id,
+                "metricName", metric.getName(),
                 "title", title,
                 "targetValue", targetValue,
                 "startDate", startDate,

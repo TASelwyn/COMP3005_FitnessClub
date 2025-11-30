@@ -1,6 +1,5 @@
 package tech.selwyn.carleton.comp3005.fitnessclub.service;
 
-import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import tech.selwyn.carleton.comp3005.fitnessclub.model.Account;
@@ -11,8 +10,7 @@ import tech.selwyn.carleton.comp3005.fitnessclub.repository.MetricEntryRepositor
 import tech.selwyn.carleton.comp3005.fitnessclub.repository.MetricRepository;
 
 import java.time.Instant;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 @AllArgsConstructor
@@ -48,10 +46,23 @@ public class MetricService {
                 .toList();
     }
 
-    @Transactional
-    public MetricEntry getLatestMetric(Long accountId, Long metricId) {
-        return entryRepo.findTopByAccountIdAndMetricIdOrderByTimestampDesc(accountId, metricId)
-                .orElse(null);
+    public List<Map<String, Object>> getLatestMetricEntries(Long accountId) {
+        Account acc = accRepo.findById(accountId).orElseThrow(() -> new IllegalArgumentException("Unable to find member"));
+        List<MetricEntry> entries = entryRepo.findByAccountIdOrderByTimestampDesc(acc.getId());
+
+        // Grab latest (only adds once, abusing fact that entries come as desc so first one is the latest)
+        Set<Long> seen = new HashSet<>();
+        List<MetricEntry> latestPerMetric = new ArrayList<>();
+        for (MetricEntry entry : entries) {
+            Long metricId = entry.getMetric().getId();
+            if (seen.add(metricId)) {
+                latestPerMetric.add(entry);
+            }
+        }
+
+        return latestPerMetric.stream()
+                .map(MetricEntry::toSummary)
+                .toList();
     }
 
     public List<Metric> getAllMetrics() {

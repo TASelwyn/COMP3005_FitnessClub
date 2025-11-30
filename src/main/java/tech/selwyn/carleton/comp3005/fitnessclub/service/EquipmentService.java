@@ -19,7 +19,6 @@ public class EquipmentService {
     /*
     Equipment Maintenance: Log issues, track repair status, associate with room/equipment
     */
-    @Transactional
     public EquipmentIssue logEquipmentIssue(Long accountId, Long equipmentId, String issue) {
         Account acc = accRepo.findById(accountId).orElseThrow(() -> new IllegalArgumentException("Unable to find member"));
 
@@ -35,7 +34,6 @@ public class EquipmentService {
         return equipmentIssueRepo.save(equipmentIssue);
     }
 
-    @Transactional
     public EquipmentRepair logEquipmentRepair(Long accountId, Long issueId, String notes) {
         Account acc = accRepo.findById(accountId).orElseThrow(() -> new IllegalArgumentException("Unable to find member"));
 
@@ -55,7 +53,6 @@ public class EquipmentService {
         return equipmentRepairRepo.save(equipmentRepair);
     }
 
-    @Transactional
     public boolean hasIssueBeenRepaired(Long issueId) {
         return equipmentRepairRepo.findByIssueId(issueId).isPresent();
     }

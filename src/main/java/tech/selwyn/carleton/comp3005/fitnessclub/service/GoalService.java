@@ -33,12 +33,12 @@ public class GoalService {
                 .toList();
     }
 
-    @Transactional
     public Goal getPrimaryGoal(Long accountId) {
         Account account = accRepo.findById(accountId).orElseThrow(() -> new IllegalArgumentException("Unable to find member"));
 
         HealthFocus focus = healthFocusRepo.findById(accountId).orElseGet(
                 () -> {
+                    // Auto build healthfocus if user hasn't been queried before
                     HealthFocus newFocus = HealthFocus.builder()
                             .account(account)
                             .primaryGoal(null)

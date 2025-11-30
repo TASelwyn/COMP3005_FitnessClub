@@ -31,12 +31,4 @@ public class Account {
 
     @Column(nullable = false)
     private String role;
-
-    public Map<String, Object> toSummary() {
-        return Map.of(
-                "accountId", id,
-                "fullName", firstName + " " + lastName,
-                "email", email
-        );
-    }
 }

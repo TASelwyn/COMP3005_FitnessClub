@@ -1,10 +1,13 @@
 package tech.selwyn.carleton.comp3005.fitnessclub.service;
 
-import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import tech.selwyn.carleton.comp3005.fitnessclub.model.*;
-import tech.selwyn.carleton.comp3005.fitnessclub.repository.*;
+import tech.selwyn.carleton.comp3005.fitnessclub.model.Account;
+import tech.selwyn.carleton.comp3005.fitnessclub.model.Room;
+import tech.selwyn.carleton.comp3005.fitnessclub.model.RoomBooking;
+import tech.selwyn.carleton.comp3005.fitnessclub.repository.AccountRepository;
+import tech.selwyn.carleton.comp3005.fitnessclub.repository.RoomBookingRepository;
+import tech.selwyn.carleton.comp3005.fitnessclub.repository.RoomRepository;
 
 import java.time.Instant;
 
@@ -18,7 +21,6 @@ public class RoomService {
     /*
     Room Booking: Assign rooms for sessions or classes. Prevent double-booking
     */
-    @Transactional
     public RoomBooking bookRoom(Long accountId, Long roomId, Instant startTime, Instant endTime) {
         Account acc = accRepo.findById(accountId).orElseThrow(() -> new IllegalArgumentException("Unable to find member"));
 
@@ -42,7 +44,6 @@ public class RoomService {
         return roomBookingRepo.save(booking);
     }
 
-    @Transactional
     public void assignBookingToSession(Long bookingId, Long sessionId) {
         RoomBooking roomBooking = roomBookingRepo.findById(bookingId).orElseThrow(() -> new IllegalArgumentException("Booking not found"));
 
