@@ -8,9 +8,9 @@ import java.util.List;
 
 public interface SessionRepository extends JpaRepository<Session, Long> {
 
-    List<Session> findByMember_AccountId(Long memberId);
+    List<Session> findByMemberId(Long memberId);
 
-    List<Session> findByMember_AccountIdAndStartTimeAfter(Long memberId, Instant now);
+    List<Session> findByMemberIdAndStartTimeAfter(Long memberId, Instant now);
 
-    List<Session> findByMember_AccountIdAndEndTimeBefore(Long memberId, Instant now);
+    List<Session> findByMemberIdAndEndTimeBefore(Long memberId, Instant now);
 }

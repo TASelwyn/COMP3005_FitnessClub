@@ -22,11 +22,11 @@ public class GoalService {
     private final HealthFocusRepository healthFocusRepo;
 
     public List<Map<String, Object>> getActiveGoals(Long accountId) {
-        accRepo.findByAccountId(accountId).orElseThrow(() -> new IllegalArgumentException("Unable to find member"));
+        accRepo.findById(accountId).orElseThrow(() -> new IllegalArgumentException("Unable to find member"));
 
         Instant now = Instant.now();
 
-        return goalRepo.findByAccountAccountId(accountId).stream()
+        return goalRepo.findByAccountId(accountId).stream()
                 .filter(goal -> now.isAfter(goal.getStartDate()))
                 .filter(goal -> now.isBefore(goal.getTargetDate()))
                 .map(Goal::toSummary)
@@ -35,9 +35,9 @@ public class GoalService {
 
     @Transactional
     public Goal getPrimaryGoal(Long accountId) {
-        Account account = accRepo.findByAccountId(accountId).orElseThrow(() -> new IllegalArgumentException("Unable to find member"));
+        Account account = accRepo.findById(accountId).orElseThrow(() -> new IllegalArgumentException("Unable to find member"));
 
-        HealthFocus focus = healthFocusRepo.findByAccountAccountId(accountId).orElseGet(() -> {
+        HealthFocus focus = healthFocusRepo.findByAccountId(accountId).orElseGet(() -> {
             HealthFocus newFocus = HealthFocus.builder()
                     .account(account)
                     .primaryGoal(null)

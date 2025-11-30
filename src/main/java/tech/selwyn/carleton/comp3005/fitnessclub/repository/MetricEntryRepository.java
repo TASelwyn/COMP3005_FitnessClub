@@ -9,8 +9,8 @@ import java.util.Optional;
 public interface MetricEntryRepository extends JpaRepository<MetricEntry, Long> {
     Optional<MetricEntry> findByEntryId(Long entryId);
 
-    List<MetricEntry> findByAccountAccountIdOrderByTimestampDesc(Long accountId);
+    List<MetricEntry> findByAccountIdOrderByTimestampDesc(Long accountId);
 
-    Optional<MetricEntry> findTopByAccount_AccountIdAndMetric_MetricIdOrderByTimestampDesc(Long accountId, Long metricId);
+    Optional<MetricEntry> findTopByAccountIdAndMetric_MetricIdOrderByTimestampDesc(Long accountId, Long metricId);
 
 }

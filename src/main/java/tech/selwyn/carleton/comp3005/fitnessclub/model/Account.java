@@ -15,7 +15,7 @@ import java.util.Map;
 public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long accountId;
+    private Long id;
 
     @Column(nullable = false)
     private String firstName;
@@ -34,7 +34,7 @@ public class Account {
 
     public Map<String, Object> toSummary() {
         return Map.of(
-                "accountId", accountId,
+                "accountId", id,
                 "fullName", firstName + " " + lastName,
                 "email", email//,
                 //"goal", currentGoal != null ? currentGoal.toSummary() : null,

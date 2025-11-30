@@ -36,7 +36,7 @@ public class CommonController {
         return Map.of(
                 "authenticated", auth.isAuthenticated(),
                 "email", user.getEmail(),
-                "accountId", user.getAccountId(),
+                "accountId", user.getAccount().getId(),
                 "firstName", user.getAccount().getFirstName(),
                 "lastName", user.getAccount().getLastName(),
                 "roles", roles
@@ -46,12 +46,10 @@ public class CommonController {
     @PutMapping("/updateProfile")
     public ResponseEntity<?> updateProfile(@AuthenticationPrincipal UserDetailsImpl user, @Valid @RequestBody UpdateProfileDto req) {
         // Update first/last Name
-        accountService.updatePersonalInfo(user.getAccountId(), req.firstName(), req.lastName());
+        accountService.updatePersonalInfo(user.getAccount().getId(), req.firstName(), req.lastName());
 
         // Update goal
-        Goal primaryGoal = goalService.getPrimaryGoal(user.getAccountId());
-
-
+        Goal primaryGoal = goalService.getPrimaryGoal(user.getAccount().getId());
 
 
         return ResponseEntity.ok(Map.of(

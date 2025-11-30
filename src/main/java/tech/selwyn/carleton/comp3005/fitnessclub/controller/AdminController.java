@@ -28,7 +28,7 @@ public class AdminController {
 
     @PostMapping("/bookRoom")
     public ResponseEntity<?> bookRoom(@AuthenticationPrincipal UserDetailsImpl user, @Valid @RequestBody RoomBookingDto req) {
-        RoomBooking booking = roomService.bookRoom(user.getAccountId(), req.roomId(), req.startTime(), req.endTime());
+        RoomBooking booking = roomService.bookRoom(user.getAccount().getId(), req.roomId(), req.startTime(), req.endTime());
 
         return ResponseEntity.ok(Map.of(
                 "message", "Successfully booked room for session",
@@ -47,7 +47,7 @@ public class AdminController {
 
     @PostMapping("/logMaintenance")
     public ResponseEntity<?> logMaintenance(@AuthenticationPrincipal UserDetailsImpl user, @Valid @RequestBody EquipmentIssueDto req) {
-        EquipmentIssue equipmentIssue = equipmentService.logEquipmentIssue(user.getAccountId(), req.equipmentId(), req.issue());
+        EquipmentIssue equipmentIssue = equipmentService.logEquipmentIssue(user.getAccount().getId(), req.equipmentId(), req.issue());
 
         return ResponseEntity.ok(Map.of(
                 "message", "Successfully logged issue",
@@ -56,7 +56,7 @@ public class AdminController {
 
     @PostMapping("/logRepair")
     public ResponseEntity<?> logRepair(@AuthenticationPrincipal UserDetailsImpl user, @Valid @RequestBody EquipmentRepairDto req) {
-        EquipmentRepair equipmentRepair = equipmentService.logEquipmentRepair(user.getAccountId(), req.issueId(), req.notes());
+        EquipmentRepair equipmentRepair = equipmentService.logEquipmentRepair(user.getAccount().getId(), req.issueId(), req.notes());
 
         return ResponseEntity.ok(Map.of(
                 "message", "Successfully logged repair",

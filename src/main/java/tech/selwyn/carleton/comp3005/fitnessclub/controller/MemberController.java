@@ -22,7 +22,7 @@ public class MemberController {
 
     @PostMapping("/logMetric")
     public ResponseEntity<?> logMetric(@AuthenticationPrincipal UserDetailsImpl user, @Valid @RequestBody LogMetricDto req) {
-        metricService.logMetric(user.getAccountId(), req.metricId(), req.value());
+        metricService.logMetric(user.getAccount().getId(), req.metricId(), req.value());
 
         return ResponseEntity.ok(Map.of(
                 "status", "success"
@@ -31,7 +31,7 @@ public class MemberController {
 
     @GetMapping("/getHealthHistory")
     public ResponseEntity<?> getHealthHistory(@AuthenticationPrincipal UserDetailsImpl user) {
-        var healthHistory = metricService.getHealthHistory(user.getAccountId());
+        var healthHistory = metricService.getHealthHistory(user.getAccount().getId());
 
         return ResponseEntity.ok(Map.of(
                 "status", "success",
@@ -41,7 +41,7 @@ public class MemberController {
 
     @GetMapping("/dashboard")
     public ResponseEntity<?> getDashboard(@AuthenticationPrincipal UserDetailsImpl user) {
-        var dashboard = dashboardService.getDashboard(user.getAccountId());
+        var dashboard = dashboardService.getDashboard(user.getAccount().getId());
 
         return ResponseEntity.ok(Map.of(
                 "status", "success",

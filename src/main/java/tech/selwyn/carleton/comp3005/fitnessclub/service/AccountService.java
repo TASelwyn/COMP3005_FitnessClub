@@ -4,7 +4,6 @@ import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import tech.selwyn.carleton.comp3005.fitnessclub.dto.UpdateProfileDto;
 import tech.selwyn.carleton.comp3005.fitnessclub.model.Account;
 import tech.selwyn.carleton.comp3005.fitnessclub.model.RoleType;
 import tech.selwyn.carleton.comp3005.fitnessclub.repository.AccountRepository;

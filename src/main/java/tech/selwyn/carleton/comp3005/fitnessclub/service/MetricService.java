@@ -14,18 +14,16 @@ import java.time.Instant;
 import java.util.List;
 import java.util.Map;
 
-@AllArgsConstructor
 @Service
+@AllArgsConstructor
 public class MetricService {
     private final AccountRepository accRepo;
     private final MetricRepository metricRepo;
     private final MetricEntryRepository entryRepo;
 
-
     /*
     Health History: Log multiple metric entries; do not overwrite. Must support time-stamped entries.
     */
-    @Transactional
     public void logMetric(Long accountId, Long metricId, Double value) {
         Metric metric = metricRepo.findByMetricId(metricId).orElseThrow(() -> new IllegalArgumentException("Unknown metric"));
         Account acc = accRepo.findById(accountId).orElseThrow(() -> new IllegalArgumentException("Unable to find member"));
@@ -40,12 +38,11 @@ public class MetricService {
         entryRepo.save(entry);
     }
 
-    @Transactional
     public List<Map<String, Object>> getHealthHistory(Long accountId) {
         Account acc = accRepo.findById(accountId)
                 .orElseThrow(() -> new IllegalArgumentException("Unable to find member"));
 
-        return entryRepo.findByAccountAccountIdOrderByTimestampDesc(acc.getAccountId())
+        return entryRepo.findByAccountIdOrderByTimestampDesc(acc.getId())
                 .stream()
                 .map(MetricEntry::toSummary)
                 .toList();
@@ -53,7 +50,7 @@ public class MetricService {
 
     @Transactional
     public MetricEntry getLatestMetric(Long accountId, Long metricId) {
-        return entryRepo.findTopByAccount_AccountIdAndMetric_MetricIdOrderByTimestampDesc(accountId, metricId)
+        return entryRepo.findTopByAccountIdAndMetric_MetricIdOrderByTimestampDesc(accountId, metricId)
                 .orElse(null);
     }
 
