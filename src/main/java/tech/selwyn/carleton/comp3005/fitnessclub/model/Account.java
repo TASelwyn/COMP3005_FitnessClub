@@ -15,7 +15,7 @@ import java.util.Map;
 public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long accountId;
+    private Long id;
 
     @Column(nullable = false)
     private String firstName;
@@ -31,14 +31,4 @@ public class Account {
 
     @Column(nullable = false)
     private String role;
-
-    public Map<String, Object> toSummary() {
-        return Map.of(
-                "accountId", accountId,
-                "fullName", firstName + " " + lastName,
-                "email", email//,
-                //"goal", currentGoal != null ? currentGoal.toSummary() : null,
-                //"lastMetric", lastMetric != null ? lastMetric.toSummary() : null
-        );
-    }
 }

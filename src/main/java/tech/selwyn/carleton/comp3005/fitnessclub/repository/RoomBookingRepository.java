@@ -7,7 +7,6 @@ import java.time.Instant;
 import java.util.Optional;
 
 public interface RoomBookingRepository extends JpaRepository<RoomBooking, Long> {
-    Optional<RoomBooking> findByBookingId(Long bookingId);
 
-    boolean existsByRoomRoomIdAndStartTimeLessThanAndEndTimeGreaterThan(Long roomId, Instant endTime, Instant startTime);
+    boolean existsByRoomIdAndStartTimeLessThanAndEndTimeGreaterThan(Long roomId, Instant endTime, Instant startTime);
 }

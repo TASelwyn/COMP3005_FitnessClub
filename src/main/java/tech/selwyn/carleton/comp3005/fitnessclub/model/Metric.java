@@ -11,7 +11,7 @@ import lombok.*;
 public class Metric {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long metricId;
+    private Long id;
 
     @Column(nullable = false, unique = true)
     private String name;

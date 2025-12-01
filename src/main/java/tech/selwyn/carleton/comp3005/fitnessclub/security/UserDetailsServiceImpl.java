@@ -1,4 +1,4 @@
-package tech.selwyn.carleton.comp3005.fitnessclub.service;
+package tech.selwyn.carleton.comp3005.fitnessclub.security;
 
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;

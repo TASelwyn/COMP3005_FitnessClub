@@ -19,11 +19,10 @@ public class EquipmentService {
     /*
     Equipment Maintenance: Log issues, track repair status, associate with room/equipment
     */
-    @Transactional
     public EquipmentIssue logEquipmentIssue(Long accountId, Long equipmentId, String issue) {
         Account acc = accRepo.findById(accountId).orElseThrow(() -> new IllegalArgumentException("Unable to find member"));
 
-        Equipment equipment = equipmentRepo.findByEquipmentId(equipmentId).orElseThrow(() -> new IllegalArgumentException("Unable to find equipment"));
+        Equipment equipment = equipmentRepo.findById(equipmentId).orElseThrow(() -> new IllegalArgumentException("Unable to find equipment"));
 
         EquipmentIssue equipmentIssue = EquipmentIssue.builder()
                 .equipment(equipment)
@@ -35,13 +34,12 @@ public class EquipmentService {
         return equipmentIssueRepo.save(equipmentIssue);
     }
 
-    @Transactional
     public EquipmentRepair logEquipmentRepair(Long accountId, Long issueId, String notes) {
         Account acc = accRepo.findById(accountId).orElseThrow(() -> new IllegalArgumentException("Unable to find member"));
 
-        EquipmentIssue equipmentIssue = equipmentIssueRepo.findByIssueId(issueId).orElseThrow(() -> new IllegalArgumentException("Unable to find equipment issue"));
+        EquipmentIssue equipmentIssue = equipmentIssueRepo.findById(issueId).orElseThrow(() -> new IllegalArgumentException("Unable to find equipment issue"));
 
-        if (equipmentRepairRepo.findByIssueIssueId(issueId).isPresent()) {
+        if (equipmentRepairRepo.findByIssueId(issueId).isPresent()) {
             throw new IllegalStateException("A repair was already logged for this issue.");
         }
 
@@ -55,8 +53,7 @@ public class EquipmentService {
         return equipmentRepairRepo.save(equipmentRepair);
     }
 
-    @Transactional
     public boolean hasIssueBeenRepaired(Long issueId) {
-        return equipmentRepairRepo.findByIssueIssueId(issueId).isPresent();
+        return equipmentRepairRepo.findByIssueId(issueId).isPresent();
     }
 }

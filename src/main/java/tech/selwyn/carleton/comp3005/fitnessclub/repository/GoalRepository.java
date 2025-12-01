@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface GoalRepository extends JpaRepository<Goal, Long> {
-    Optional<Goal> findByGoalId(Long goalId);
 
-    List<Goal> findByAccountAccountId(Long accountId);
+    List<Goal> findByAccountId(Long accountId);
 }

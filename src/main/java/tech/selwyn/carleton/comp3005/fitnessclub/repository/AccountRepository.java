@@ -1,5 +1,6 @@
 package tech.selwyn.carleton.comp3005.fitnessclub.repository;
 
+import org.jetbrains.annotations.NotNull;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -10,7 +11,6 @@ import java.util.Optional;
 
 public interface AccountRepository extends JpaRepository<Account, Long> {
     Optional<Account> findByEmail(String email);
-    Optional<Account> findByAccountId(Long accountId);
 
     @Query("""
         SELECT a FROM Account a

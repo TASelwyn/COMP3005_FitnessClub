@@ -18,7 +18,7 @@ import tech.selwyn.carleton.comp3005.fitnessclub.dto.LoginRequestDto;
 import tech.selwyn.carleton.comp3005.fitnessclub.dto.RegisterRequestDto;
 import tech.selwyn.carleton.comp3005.fitnessclub.model.Account;
 import tech.selwyn.carleton.comp3005.fitnessclub.service.AccountService;
-import tech.selwyn.carleton.comp3005.fitnessclub.service.JwtService;
+import tech.selwyn.carleton.comp3005.fitnessclub.security.JwtService;
 
 import java.util.Map;
 

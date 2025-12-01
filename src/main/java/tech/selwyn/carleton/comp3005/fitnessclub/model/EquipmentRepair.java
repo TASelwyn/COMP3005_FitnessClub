@@ -17,7 +17,7 @@ import java.time.Instant;
 public class EquipmentRepair {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long repairId;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "equipment_issue_id", nullable = false)
