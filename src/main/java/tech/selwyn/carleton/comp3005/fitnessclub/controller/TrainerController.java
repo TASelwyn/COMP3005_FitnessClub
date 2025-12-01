@@ -2,6 +2,10 @@ package tech.selwyn.carleton.comp3005.fitnessclub.controller;
 
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import tech.selwyn.carleton.comp3005.fitnessclub.dto.LookupMemberDto;
+import tech.selwyn.carleton.comp3005.fitnessclub.dto.SetAvailabilityDto;
+import tech.selwyn.carleton.comp3005.fitnessclub.service.AvailabilityService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,7 +24,7 @@ import java.util.Map;
 public class TrainerController {
 
     private final AccountService accService;
-    private final SessionService sessionService;
+    private final AvailabilityService availabilityService;
 
     @GetMapping("/memberLookup")
     public ResponseEntity<?> memberLookup(@RequestParam LookupMemberDto req) {
@@ -32,6 +36,16 @@ public class TrainerController {
                 "count", results.size(),
                 "results", results
         ));
+    }
+
+    @PostMapping("/setAvailability")
+    public ResponseEntity<?> setAvailability(
+            @RequestParam Long trainerId,
+            @RequestBody SetAvailabilityDto req
+    ) {
+        availabilityService.setAvailability(trainerId, req.startTime(), req.endTime(), req.note());
+
+        return ResponseEntity.ok(Map.of("status", "success"));
     }
 
     @GetMapping("/getSchedule")
