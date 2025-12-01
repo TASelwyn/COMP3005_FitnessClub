@@ -1,0 +1,702 @@
+databaseChangeLog:
+- changeSet:
+    id: 1764622939677-1
+    author: devil (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: accounts_pkey
+            name: id
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: email
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: first_name
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: last_name
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: password_hash
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: role
+            type: VARCHAR(255)
+        tableName: accounts
+- changeSet:
+    id: 1764622939677-2
+    author: devil (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: sessions_pkey
+            name: id
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: end_time
+            type: TIMESTAMP WITH TIME ZONE
+        - column:
+            constraints:
+              nullable: false
+            name: start_time
+            type: TIMESTAMP WITH TIME ZONE
+        - column:
+            constraints:
+              nullable: false
+            name: status
+            type: VARCHAR(255)
+        - column:
+            name: booking_id
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: member_id
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: trainer_id
+            type: BIGINT
+        tableName: sessions
+- changeSet:
+    id: 1764622939677-3
+    author: devil (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: availabilities_pkey
+            name: id
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: end_time
+            type: TIMESTAMP WITH TIME ZONE
+        - column:
+            constraints:
+              nullable: false
+            name: start_time
+            type: TIMESTAMP WITH TIME ZONE
+        - column:
+            constraints:
+              nullable: false
+            name: trainer_id
+            type: BIGINT
+        tableName: availabilities
+- changeSet:
+    id: 1764622939677-4
+    author: devil (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: equipment_pkey
+            name: equipment_id
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: description
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: name
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: room_id
+            type: BIGINT
+        tableName: equipment
+- changeSet:
+    id: 1764622939677-5
+    author: devil (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: equipment_issues_pkey
+            name: id
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: description
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: reported_at
+            type: TIMESTAMP WITH TIME ZONE
+        - column:
+            constraints:
+              nullable: false
+            name: equipment_id
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: account_id
+            type: BIGINT
+        tableName: equipment_issues
+- changeSet:
+    id: 1764622939677-6
+    author: devil (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: equipment_repairs_pkey
+            name: id
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: notes
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: repaired_at
+            type: TIMESTAMP WITH TIME ZONE
+        - column:
+            constraints:
+              nullable: false
+            name: equipment_issue_id
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: account_id
+            type: BIGINT
+        tableName: equipment_repairs
+- changeSet:
+    id: 1764622939677-7
+    author: devil (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: goals_pkey
+            name: id
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: start_date
+            type: TIMESTAMP WITH TIME ZONE
+        - column:
+            constraints:
+              nullable: false
+            name: target_date
+            type: TIMESTAMP WITH TIME ZONE
+        - column:
+            constraints:
+              nullable: false
+            name: target_value
+            type: FLOAT8
+        - column:
+            constraints:
+              nullable: false
+            name: title
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: account_id
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: metric_id
+            type: BIGINT
+        tableName: goals
+- changeSet:
+    id: 1764622939677-8
+    author: devil (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: health_focus_pkey
+            name: account_id
+            type: BIGINT
+        - column:
+            name: goal_id
+            type: BIGINT
+        tableName: health_focus
+- changeSet:
+    id: 1764622939677-9
+    author: devil (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: metric_entries_pkey
+            name: id
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: timestamp
+            type: TIMESTAMP WITH TIME ZONE
+        - column:
+            constraints:
+              nullable: false
+            name: value
+            type: FLOAT8
+        - column:
+            constraints:
+              nullable: false
+            name: account_id
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: metric_id
+            type: BIGINT
+        tableName: metric_entries
+- changeSet:
+    id: 1764622939677-10
+    author: devil (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: metrics_pkey
+            name: id
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: description
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: name
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: unit
+            type: VARCHAR(255)
+        tableName: metrics
+- changeSet:
+    id: 1764622939677-11
+    author: devil (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: room_bookings_pkey
+            name: id
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: end_time
+            type: TIMESTAMP WITH TIME ZONE
+        - column:
+            constraints:
+              nullable: false
+            name: start_time
+            type: TIMESTAMP WITH TIME ZONE
+        - column:
+            constraints:
+              nullable: false
+            name: account_id
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: room_id
+            type: BIGINT
+        tableName: room_bookings
+- changeSet:
+    id: 1764622939677-12
+    author: devil (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: rooms_pkey
+            name: id
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: description
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: name
+            type: VARCHAR(255)
+        tableName: rooms
+- changeSet:
+    id: 1764622939677-13
+    author: devil (generated)
+    changes:
+    - addUniqueConstraint:
+        columnNames: email
+        constraintName: ukn7ihswpy07ci568w34q0oi8he
+        tableName: accounts
+- changeSet:
+    id: 1764622939677-14
+    author: devil (generated)
+    changes:
+    - addUniqueConstraint:
+        columnNames: booking_id
+        constraintName: uk20xgcxca3urdp571wqxvi1qih
+        tableName: sessions
+- changeSet:
+    id: 1764622939677-15
+    author: devil (generated)
+    changes:
+    - addUniqueConstraint:
+        columnNames: name
+        constraintName: uktmx4eagbit8y5bnuvvorie10g
+        tableName: metrics
+- changeSet:
+    id: 1764622939677-16
+    author: devil (generated)
+    changes:
+    - addUniqueConstraint:
+        columnNames: name
+        constraintName: uk1kuqhbfxed2e8t571uo82n545
+        tableName: rooms
+- changeSet:
+    id: 1764622939677-17
+    author: devil (generated)
+    changes:
+    - createSequence:
+        cacheSize: 1
+        cycle: false
+        dataType: bigint
+        incrementBy: 50
+        maxValue: 9223372036854775807
+        minValue: 1
+        sequenceName: member_seq
+        startValue: 1
+- changeSet:
+    id: 1764622939677-18
+    author: devil (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: account_id
+        baseTableName: equipment_issues
+        constraintName: fk2dfphfeuv6f8mg02r353311hh
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: accounts
+        validate: true
+- changeSet:
+    id: 1764622939677-19
+    author: devil (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: account_id
+        baseTableName: goals
+        constraintName: fk36sa9uc3vkysp86yi8gyu8cxw
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: accounts
+        validate: true
+- changeSet:
+    id: 1764622939677-20
+    author: devil (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: room_id
+        baseTableName: room_bookings
+        constraintName: fk8wb395es6guf2c5cq0j6w2i72
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: rooms
+        validate: true
+- changeSet:
+    id: 1764622939677-21
+    author: devil (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: account_id
+        baseTableName: room_bookings
+        constraintName: fk9m8218gnr09e3dloo6aplchix
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: accounts
+        validate: true
+- changeSet:
+    id: 1764622939677-22
+    author: devil (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: equipment_issue_id
+        baseTableName: equipment_repairs
+        constraintName: fkc86947x9cn7m0dhpsoou056mh
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: equipment_issues
+        validate: true
+- changeSet:
+    id: 1764622939677-23
+    author: devil (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: account_id
+        baseTableName: metric_entries
+        constraintName: fkcrj1marwp48ytkntge9c92b7x
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: accounts
+        validate: true
+- changeSet:
+    id: 1764622939677-24
+    author: devil (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: goal_id
+        baseTableName: health_focus
+        constraintName: fkded9dpavxhi5gqmielqt6g6dy
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: goals
+        validate: true
+- changeSet:
+    id: 1764622939677-25
+    author: devil (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: trainer_id
+        baseTableName: availabilities
+        constraintName: fkftvarlbpure9v652ythtnywd0
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: accounts
+        validate: true
+- changeSet:
+    id: 1764622939677-26
+    author: devil (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: room_id
+        baseTableName: equipment
+        constraintName: fkha4qvopj5gipabhegokka0qo7
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: rooms
+        validate: true
+- changeSet:
+    id: 1764622939677-27
+    author: devil (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: account_id
+        baseTableName: health_focus
+        constraintName: fkhojwdp61vixr0qehj9udj0844
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: accounts
+        validate: true
+- changeSet:
+    id: 1764622939677-28
+    author: devil (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: metric_id
+        baseTableName: metric_entries
+        constraintName: fkhokfvfexk0q8oh32kygy1jumq
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: metrics
+        validate: true
+- changeSet:
+    id: 1764622939677-29
+    author: devil (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: account_id
+        baseTableName: equipment_repairs
+        constraintName: fki7e21rdg6n4a49yi3r1d35jqx
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: accounts
+        validate: true
+- changeSet:
+    id: 1764622939677-30
+    author: devil (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: equipment_id
+        baseTableName: equipment_issues
+        constraintName: fkift8n47dw92wwt93lmvy6qqtk
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: equipment_id
+        referencedTableName: equipment
+        validate: true
+- changeSet:
+    id: 1764622939677-31
+    author: devil (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: trainer_id
+        baseTableName: sessions
+        constraintName: fkl3a1aynslbd4666ndyntcpqph
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: accounts
+        validate: true
+- changeSet:
+    id: 1764622939677-32
+    author: devil (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: member_id
+        baseTableName: sessions
+        constraintName: fkowo4khrnxj7fosdpyuy3cwxx6
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: accounts
+        validate: true
+- changeSet:
+    id: 1764622939677-33
+    author: devil (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: booking_id
+        baseTableName: sessions
+        constraintName: fksmv1nqwkj8lc0v60v53j2kaf9
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: room_bookings
+        validate: true
+- changeSet:
+    id: 1764622939677-34
+    author: devil (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: metric_id
+        baseTableName: goals
+        constraintName: fksy1a6eo36bcut6rjs7r343d43
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: metrics
+        validate: true
+

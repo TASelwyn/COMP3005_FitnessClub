@@ -13,7 +13,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: update # Set to "validate" for submission (requires generating liquibase changelog!!!)
+      ddl-auto: validate
     show-sql: true
 server:
   port: 8080

@@ -9,7 +9,8 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-@Data
+@Setter
+@ToString
 @Table(name = "health_focus")
 public class HealthFocus {
     @Id
