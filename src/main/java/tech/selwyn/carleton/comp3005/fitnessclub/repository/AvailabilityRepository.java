@@ -8,8 +8,7 @@ import java.util.List;
 
 public interface AvailabilityRepository extends JpaRepository<Availability, Long> {
 
-    // Get all availability for a trainer
-    List<Availability> findByTrainerIdOrderByStartTime(Long trainerId);
+    boolean existsByTrainerIdAndStartTimeLessThanEqualAndEndTimeGreaterThanEqual(Long trainerId, Instant startTime, Instant endTime);
 
     // Find overlapping availabilities
     List<Availability> findByTrainerIdAndEndTimeAfterAndStartTimeBefore(

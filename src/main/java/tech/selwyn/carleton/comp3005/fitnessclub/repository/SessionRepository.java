@@ -11,5 +11,8 @@ public interface SessionRepository extends JpaRepository<Session, Long> {
     List<Session> findByMemberIdAndStartTimeAfter(Long memberId, Instant now);
     List<Session> findByTrainerIdAndStartTimeAfter(Long memberId, Instant now);
 
+    boolean existsByTrainerIdAndStartTimeLessThanAndEndTimeGreaterThan(Long trainerId, Instant startTime, Instant endTime);
+    boolean existsByMemberIdAndStartTimeLessThanAndEndTimeGreaterThan(Long trainerId, Instant startTime, Instant endTime);
+
     List<Session> findByMemberIdAndEndTimeBefore(Long memberId, Instant now);
 }

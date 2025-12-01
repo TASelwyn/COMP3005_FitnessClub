@@ -16,6 +16,7 @@ import tech.selwyn.carleton.comp3005.fitnessclub.service.AccountService;
 import tech.selwyn.carleton.comp3005.fitnessclub.service.GoalService;
 import tech.selwyn.carleton.comp3005.fitnessclub.service.MetricService;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -53,22 +54,21 @@ public class CommonController {
 
         // Update goal
         Goal primaryGoal = goalService.getPrimaryGoal(user.getAccount().getId());
-        if (!req.goalTitle().equals(primaryGoal.getTitle())) {
+        if (!req.goalTitle().isBlank() && !req.goalTitle().equals(primaryGoal.getTitle())) {
             primaryGoal.setTitle(req.goalTitle());
         }
-        if (!req.goalTargetValue().equals(primaryGoal.getTargetValue())) {
+        if (!req.goalTargetValue().isNaN() && !req.goalTargetValue().equals(primaryGoal.getTargetValue())) {
             primaryGoal.setTargetValue(req.goalTargetValue());
         }
-        if (!req.goalTargetDate().equals(primaryGoal.getTargetDate())) {
+        if (req.goalTargetDate().isAfter(Instant.now()) && !req.goalTargetDate().equals(primaryGoal.getTargetDate())) {
             primaryGoal.setTargetDate(req.goalTargetDate());
         }
 
         // Update metric under primaryGoal
-        if (!req.metricId().equals(primaryGoal.getMetric().getId())) {
-            Metric metric = metricService.getMetric(req.metricId());
+        if (!req.goalMetricId().equals(primaryGoal.getMetric().getId())) {
+            Metric metric = metricService.getMetric(req.goalMetricId());
             primaryGoal.setMetric(metric);
         }
-
 
         return ResponseEntity.ok(Map.of(
                 "status", "success"

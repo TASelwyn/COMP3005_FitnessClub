@@ -6,6 +6,7 @@ import tech.selwyn.carleton.comp3005.fitnessclub.model.Account;
 import tech.selwyn.carleton.comp3005.fitnessclub.model.Session;
 import tech.selwyn.carleton.comp3005.fitnessclub.model.SessionStatus;
 import tech.selwyn.carleton.comp3005.fitnessclub.repository.AccountRepository;
+import tech.selwyn.carleton.comp3005.fitnessclub.repository.AvailabilityRepository;
 import tech.selwyn.carleton.comp3005.fitnessclub.repository.SessionRepository;
 
 import java.time.Instant;
@@ -17,7 +18,7 @@ public class SessionService {
 
     private final SessionRepository sessionRepo;
     private final AccountRepository accRepo;
-    private final RoomService roomService;
+    private final AvailabilityRepository availabilityRepo;
 
     public Session scheduleSession(Long memberId, Long trainerId, Instant startTime, Instant endTime) {
         Account member = accRepo.findById(memberId)
@@ -25,30 +26,22 @@ public class SessionService {
         Account trainer = accRepo.findById(trainerId)
                 .orElseThrow(() -> new IllegalArgumentException("Trainer not found"));
 
-        // TODO Ensure trainer doesn't have anything during time slot
-        //
+        // Ensure trainer doesn't have anything during time slot
+        if (sessionRepo.existsByTrainerIdAndStartTimeLessThanAndEndTimeGreaterThan(trainerId, startTime, endTime)) {
+            throw new IllegalStateException("Trainer is already booked during this time slot");
+        }
 
+        // Check trainer is scheduled for that time
+        if (availabilityRepo.existsByTrainerIdAndStartTimeLessThanEqualAndEndTimeGreaterThanEqual(trainerId, startTime, endTime)) {
+            throw new IllegalStateException("Trainer is not working during this time slot");
+        }
 
-        // TODO Check trainer is scheduled for that time (Must add functionality to store EmployeeSchedule, make new Entity for it)
-        //
-        // CHECK INDEPENDENTLY (check roomService for example)
+        // Ensure member doesn't have anything during time slot
+        if (sessionRepo.existsByMemberIdAndStartTimeLessThanAndEndTimeGreaterThan(memberId, startTime, endTime)) {
+            throw new IllegalStateException("Trainer is already booked during this time slot");
+        }
 
-
-
-
-        // TODO Ensure member doesn't have anything during time slot
-        //
-
-
-
-
-
-
-        // TODO WHEN BOTH TRAINER/MEMBER HAVE SCHEDULED A TIME TOGETHER, LOGIC MUST THEN DO A ROOM BOOKING FOR THEIR SESSION
-        //roomService.bookRoom(accountId, roomId, startTime, endTime);
-        //roomService.assignBookingToSession(bookingId, sessionId);
-
-        Session s = Session.builder()
+        Session session = Session.builder()
                 .member(member)
                 .trainer(trainer)
                 .startTime(startTime)
@@ -56,7 +49,7 @@ public class SessionService {
                 .status(SessionStatus.SCHEDULED)
                 .build();
 
-        return sessionRepo.save(s);
+        return sessionRepo.save(session);
     }
 
     /*

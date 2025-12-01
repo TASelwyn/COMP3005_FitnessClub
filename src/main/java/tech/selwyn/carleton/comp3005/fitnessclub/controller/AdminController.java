@@ -30,7 +30,7 @@ public class AdminController {
 
     @PostMapping("/bookRoomForSession")
     public ResponseEntity<?> bookRoomForSession(@AuthenticationPrincipal UserDetailsImpl user, @Valid @RequestBody AssignBookingDto req) {
-        Session session = roomService.getBookingForSession(user.getAccount().getId(), req.sessionId());
+        Session session = roomService.assignRoomBookingForSession(user.getAccount().getId(), req.sessionId());
 
         return ResponseEntity.ok(Map.of(
                 "message", "Successfully booked room for session",

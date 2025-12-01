@@ -56,7 +56,7 @@ public class RoomService {
         return roomBookingRepo.save(booking);
     }
 
-    public Session getBookingForSession(Long accountId, Long sessionId) {
+    public Session assignRoomBookingForSession(Long accountId, Long sessionId) {
         // Ensure session exists
         Session session = sessionRepo.findById(sessionId).orElseThrow(() -> new IllegalArgumentException("Session not found"));
 

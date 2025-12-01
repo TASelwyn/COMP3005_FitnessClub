@@ -8,12 +8,8 @@ public record UpdateProfileDto(
         @Size(max = 50) String firstName,
         @Size(max = 50) String lastName,
 
-        // Goal fields
         String goalTitle,
         Double goalTargetValue,
         Instant goalTargetDate,
-
-        // Metric logging fields
-        Long metricId,
-        Double metricValue
+        Long goalMetricId
 ) {}
