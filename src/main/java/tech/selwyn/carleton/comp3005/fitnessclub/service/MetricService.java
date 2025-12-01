@@ -22,7 +22,7 @@ public class MetricService {
     /*
     Health History: Log multiple metric entries; do not overwrite. Must support time-stamped entries.
     */
-    public void logMetric(Long accountId, Long metricId, Double value) {
+    public MetricEntry logMetric(Long accountId, Long metricId, Double value) {
         Metric metric = metricRepo.findById(metricId).orElseThrow(() -> new IllegalArgumentException("Unknown metric"));
         Account acc = accRepo.findById(accountId).orElseThrow(() -> new IllegalArgumentException("Unable to find member"));
 
@@ -33,7 +33,7 @@ public class MetricService {
                 .timestamp(Instant.now())
                 .build();
 
-        entryRepo.save(entry);
+        return entryRepo.save(entry);
     }
 
     public List<Map<String, Object>> getHealthHistory(Long accountId) {

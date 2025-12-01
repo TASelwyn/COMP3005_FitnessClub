@@ -36,6 +36,6 @@ public class Session {
     private Instant endTime;
 
     @Column(nullable = false)
-    private String status; // SCHEDULED_ON_TIME OR COMPLETED OR CANCELLED
+    private String status;
 }
 

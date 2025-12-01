@@ -1,7 +1,7 @@
 package tech.selwyn.carleton.comp3005.fitnessclub.service;
 
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import tech.selwyn.carleton.comp3005.fitnessclub.model.Account;
 import tech.selwyn.carleton.comp3005.fitnessclub.model.Availability;
 import tech.selwyn.carleton.comp3005.fitnessclub.repository.AccountRepository;
@@ -11,21 +11,16 @@ import java.time.Instant;
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class AvailabilityService {
 
     private final AvailabilityRepository availabilityRepo;
     private final AccountRepository accountRepo;
 
-    public AvailabilityService(AvailabilityRepository availabilityRepo, AccountRepository accountRepo) {
-        this.availabilityRepo = availabilityRepo;
-        this.accountRepo = accountRepo;
-    }
-
     /**
      * Adds a new availability slot for a trainer.
      */
-    @Transactional
-    public Availability setAvailability(Long trainerId, Instant start, Instant end, String note) {
+    public Availability setAvailability(Long trainerId, Instant start, Instant end) {
 
         // Validate times or else it'll throw error
         if (!start.isBefore(end)) {
@@ -34,7 +29,7 @@ public class AvailabilityService {
 
         // Checking for overlapping availability for the same trainer if there is any conflict
         List<Availability> overlaps = availabilityRepo
-                .findByTrainer_AccountIdAndEndTimeAfterAndStartTimeBefore(trainerId, start, end);
+                .findByTrainerIdAndEndTimeAfterAndStartTimeBefore(trainerId, start, end);
         if (!overlaps.isEmpty()) {
             throw new IllegalArgumentException("Overlapping availability exists");
         }
@@ -48,7 +43,6 @@ public class AvailabilityService {
                 .trainer(trainer)
                 .startTime(start)
                 .endTime(end)
-                .note(note)
                 .build();
 
         return availabilityRepo.save(availability);

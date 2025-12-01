@@ -70,8 +70,6 @@ public class CommonController {
         }
 
 
-
-
         return ResponseEntity.ok(Map.of(
                 "status", "success"
         ));

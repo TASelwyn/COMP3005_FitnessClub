@@ -5,6 +5,5 @@ import java.time.Instant;
 
 public record SetAvailabilityDto(
         @NotNull Instant startTime,
-        @NotNull Instant endTime,
-        String note
+        @NotNull Instant endTime
 ) {}

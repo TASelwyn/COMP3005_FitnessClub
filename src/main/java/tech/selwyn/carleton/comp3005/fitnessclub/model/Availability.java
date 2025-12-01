@@ -6,16 +6,15 @@ import lombok.*;
 import java.time.Instant;
 
 @Entity
-@Table(name = "availabilities")
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
+@Data
 @Builder
+@Table(name = "availabilities")
 public class Availability {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long availabilityId;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "trainer_id", nullable = false)
@@ -26,6 +25,4 @@ public class Availability {
 
     @Column(nullable = false)
     private Instant endTime;
-
-    private String note; // optional
 }

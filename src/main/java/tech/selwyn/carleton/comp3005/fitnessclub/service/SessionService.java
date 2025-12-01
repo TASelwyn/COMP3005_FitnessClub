@@ -8,7 +8,6 @@ import tech.selwyn.carleton.comp3005.fitnessclub.repository.AccountRepository;
 import tech.selwyn.carleton.comp3005.fitnessclub.repository.SessionRepository;
 
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -64,8 +63,7 @@ public class SessionService {
     */
     public List<Session> getScheduledSessions(Long trainerId) {
         // get all current/upcoming sessions and classes
-        // TODO DO THIS Make it return assigned PT Sessions/Classes
-        return new ArrayList<>();
+        return sessionRepo.findByTrainerIdAndStartTimeAfter(trainerId, Instant.now());
     }
 
     public List<Session> getUpcomingSessions(Long memberId) {

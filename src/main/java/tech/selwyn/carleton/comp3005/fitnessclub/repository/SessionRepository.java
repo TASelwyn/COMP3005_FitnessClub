@@ -9,6 +9,7 @@ import java.util.List;
 public interface SessionRepository extends JpaRepository<Session, Long> {
 
     List<Session> findByMemberIdAndStartTimeAfter(Long memberId, Instant now);
+    List<Session> findByTrainerIdAndStartTimeAfter(Long memberId, Instant now);
 
     List<Session> findByMemberIdAndEndTimeBefore(Long memberId, Instant now);
 }
