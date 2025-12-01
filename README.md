@@ -2,11 +2,34 @@
 ## Health and Fitness Club Management System
 
 ## Technologies Used
-- Java 21+
-- Spring 3.5.7
-- Hibernate
-- PostgreSQL 18
+
+### Backend
+- Java 21
+- Spring Boot 3.5.7
+- Hibernate ORM 6.6.1
+- Liquibase 4.30.0
+- PostgreSQL 18.1
 - Docker 4.50.0
+### Black magic
+- Lombok 1.18.42
+- Jakarta Persistence 3.1.0
+- SpringDoc OPENAPI 2.6.0
+
+## Running the project
+Clone the repository
+```bash
+git clone git@github.com:TASelwyn/COMP3005_FitnessClub.git
+```
+
+Enter the project folder
+```bash
+cd COMP3005_FitnessClub
+```
+
+Build & Run the application
+```bash
+./mvnw spring-boot:run
+```
 
 ## ORM Integration Bonus
 This project fully integrates Spring Boot, Hibernate, Jakarta and Liquibase as a full-fledged application & ORM system.
