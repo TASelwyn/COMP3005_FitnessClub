@@ -11,8 +11,28 @@
 	<groupId>tech.selwyn.carleton.comp3005</groupId>
 	<artifactId>fitnessclub</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>fitnessclub</name>
+	<name>FitnessClub</name>
 	<description>COMP 3005 Final Project - Health and Fitness Club Management System</description>
+	<url/>
+	<licenses>
+		<license>
+			<name>Course Submission License</name>
+			<comments>This project is for academic use only (course submission). No warranty. Not for commercial distribution.</comments>
+		</license>
+	</licenses>
+	<developers>
+		<developer>
+			<id>TASelwyn</id>
+			<name>Thomas Selwyn</name>
+			<email>thomas@selwyn.tech</email>
+		</developer>
+	</developers>
+	<scm>
+		<connection/>
+		<developerConnection/>
+		<tag/>
+		<url/>
+	</scm>
 	<properties>
 		<java.version>21</java.version>
 	</properties>
