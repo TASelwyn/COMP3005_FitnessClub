@@ -1,6 +1,24 @@
-# COMP 3005 - Database Management Systems
+# COMP 3005 - Final Project
 ## Health and Fitness Club Management System
+This project fully integrates Spring Boot, Hibernate, Jakarta and Liquibase as a full-fledged application & ORM system.
 
+## Project Structure
+```bash
+src/main/
+   - java/               # Program Root
+      .../fitnessclub/   # Spring Code
+         - controller/   # REST Endpoints 
+         - dto/          # Data Transfer Objects (FE <-> BE)
+         - model/        # ORM Entity mappings
+         - repository/   # ORM Repos Interfaces (to talk to db)
+         - security/     # Spring Security (auth)
+         - service/      # Business Logic
+   - resources/          # Program Setup
+     - db.changelog/     # Database Seed
+     - application.yml   # Spring Boot configuration
+compose.yaml             # Docker compose file
+mvnw                     # Maven Runtime
+```
 ## Technologies Used
 
 ### Backend
@@ -32,8 +50,6 @@ Build & Run the application
 ```
 
 ## ORM Integration Bonus
-This project fully integrates Spring Boot, Hibernate, Jakarta and Liquibase as a full-fledged application & ORM system.
-
 All entities are under the "src/main/java/../model" folder tagged with Jakarta annotations to denote database properties such as @Id, @GeneratedValue, @ManyToOne, @OneToMany, @OneToOne. These annotations automatically assign PK/FK, Cascading rules, Loading behaviour, Table/Column mappings, etc.
 
 All database access is done through repository interfaces such as "AccountRepository", "SessionRepository", "RoomRepository", etc. They are all located under /repository src folder.
@@ -41,8 +57,16 @@ Most simple CRUD operations are automatically handled and do not need explicit m
 
 Service layer manipulates ORM Managed Entity Objects, not direct SQL queries. This prevents ORM bypass. The only notable ORM "bypass" is the searchMembersByName function as there's no clean way to do it.
 
+Code sample for updating an entity:
+```
+Account acc = accRepo.findById(accountId);
+acc.setFirstName(firstName);
+acc.setLastName(lastName);
+accRepo.save(acc);
+```
+
 Major entities mapped using ORM:
-- Accont
+- Account
 - Availability
 - Equipment
 - EquipmentIssue
@@ -54,6 +78,10 @@ Major entities mapped using ORM:
 - Room
 - RoomBooking
 - Session
+
+## Authors
+- Thomas Selwyn
+- Nitish Grover
 
 ## License
 This project is for academic use only (course submission). No warranty. Not for commercial distribution.
