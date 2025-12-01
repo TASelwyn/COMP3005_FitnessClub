@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import tech.selwyn.carleton.comp3005.fitnessclub.dto.LogMetricDto;
 import tech.selwyn.carleton.comp3005.fitnessclub.dto.ScheduleSessionDto;
 import tech.selwyn.carleton.comp3005.fitnessclub.model.MetricEntry;
+import tech.selwyn.carleton.comp3005.fitnessclub.model.Session;
 import tech.selwyn.carleton.comp3005.fitnessclub.security.UserDetailsImpl;
 import tech.selwyn.carleton.comp3005.fitnessclub.service.DashboardService;
 import tech.selwyn.carleton.comp3005.fitnessclub.service.MetricService;
@@ -56,8 +57,7 @@ public class MemberController {
 
     @PostMapping("/scheduleSession")
     public ResponseEntity<?> scheduleSession(@AuthenticationPrincipal UserDetailsImpl user, @Valid @RequestBody ScheduleSessionDto req) {
-        var session = sessionService.scheduleSession(user.getAccount().getId(), req.trainerId(), req.startTime(), req.endTime());
-
+        Session session = sessionService.scheduleSession(user.getAccount().getId(), req.trainerId(), req.startTime(), req.endTime());
 
         return ResponseEntity.ok(Map.of(
                 "status", "success",

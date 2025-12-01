@@ -31,7 +31,7 @@ public class AccountService {
         newAccount.setFirstName(firstName);
         newAccount.setLastName(lastName);
         newAccount.setPasswordHash(encoder.encode(password));
-        newAccount.setRole(RoleType.ROLE_MEMBER.toString());
+        newAccount.setRole(RoleType.ROLE_MEMBER);
 
         return accRepo.save(newAccount);
     }
@@ -43,7 +43,7 @@ public class AccountService {
         return accRepo.searchMembersByName(name).stream()
                 .map(acc -> new MemberSummaryDto(
                         acc.getId(),
-                        acc.getFirstName() + acc.getLastName(),
+                        acc.getFullName(),
                         acc.getEmail(),
                         goalService.getPrimaryGoal(acc.getId()).toSummary(),
                         metricService.getLatestMetricEntries(acc.getId())))

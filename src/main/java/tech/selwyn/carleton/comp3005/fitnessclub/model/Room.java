@@ -1,14 +1,15 @@
 package tech.selwyn.carleton.comp3005.fitnessclub.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
+@Getter
+@Setter
+@ToString(onlyExplicitlyIncluded = true)
+@Builder
 @Table(name = "rooms")
 public class Room {
     @Id
@@ -16,13 +17,9 @@ public class Room {
     private Long id;
 
     @Column(nullable = false, unique = true)
+    @ToString.Include
     private String name;
 
     @Column(nullable = false)
     private String description;
-
-    @Override
-    public String toString() {
-        return id + name;
-    }
 }

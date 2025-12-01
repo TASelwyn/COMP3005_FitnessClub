@@ -24,7 +24,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         Account acc = accRepo.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("Not found"));
 
-        List<SimpleGrantedAuthority> authorities = List.of(new SimpleGrantedAuthority(acc.getRole()));
+        List<SimpleGrantedAuthority> authorities = List.of(new SimpleGrantedAuthority(acc.getRole().toString()));
 
         //return new UserDetailsImpl(acc);
         return User.builder()

@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import tech.selwyn.carleton.comp3005.fitnessclub.model.Account;
 import tech.selwyn.carleton.comp3005.fitnessclub.model.Session;
+import tech.selwyn.carleton.comp3005.fitnessclub.model.SessionStatus;
 import tech.selwyn.carleton.comp3005.fitnessclub.repository.AccountRepository;
 import tech.selwyn.carleton.comp3005.fitnessclub.repository.SessionRepository;
 
@@ -52,7 +53,7 @@ public class SessionService {
                 .trainer(trainer)
                 .startTime(startTime)
                 .endTime(endTime)
-                .status("SCHEDULED")
+                .status(SessionStatus.SCHEDULED)
                 .build();
 
         return sessionRepo.save(s);

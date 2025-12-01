@@ -2,6 +2,7 @@ package tech.selwyn.carleton.comp3005.fitnessclub.service;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import tech.selwyn.carleton.comp3005.fitnessclub.model.Account;
 import tech.selwyn.carleton.comp3005.fitnessclub.model.Metric;
 import tech.selwyn.carleton.comp3005.fitnessclub.model.MetricEntry;
@@ -46,6 +47,7 @@ public class MetricService {
                 .toList();
     }
 
+    @Transactional(readOnly = true)
     public List<Map<String, Object>> getLatestMetricEntries(Long accountId) {
         Account acc = accRepo.findById(accountId).orElseThrow(() -> new IllegalArgumentException("Unable to find member"));
         List<MetricEntry> entries = entryRepo.findByAccountIdOrderByTimestampDesc(acc.getId());

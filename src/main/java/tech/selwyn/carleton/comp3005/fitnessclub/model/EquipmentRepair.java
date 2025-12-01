@@ -1,17 +1,16 @@
 package tech.selwyn.carleton.comp3005.fitnessclub.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.Instant;
 
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
+@Getter
+@Setter
+@ToString
 @Builder
 @Table(name = "equipment_repairs")
 public class EquipmentRepair {
@@ -19,16 +18,18 @@ public class EquipmentRepair {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "equipment_issue_id", nullable = false)
+    @ToString.Exclude
     private EquipmentIssue issue;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "account_id", nullable = false)
-    private Account repaired_by;
+    @ToString.Exclude
+    private Account repairedBy;
 
-    @Column(nullable = false)
-    private Instant repaired_at;
+    @Column(name = "repaired_at", nullable = false)
+    private Instant repairedAt;
 
     @Column(nullable = false)
     private String notes;

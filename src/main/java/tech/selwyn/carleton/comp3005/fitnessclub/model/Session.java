@@ -1,32 +1,40 @@
 package tech.selwyn.carleton.comp3005.fitnessclub.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.Instant;
 
 @Entity
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
+@ToString
 @Builder
 @Table(name = "sessions")
 public class Session {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "trainer_id", nullable = false)
+    @ToString.Exclude
+    @JsonIgnore
     private Account trainer;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id", nullable = false)
+    @ToString.Exclude
+    @JsonIgnore
     private Account member;
 
-    @ManyToOne
-    @JoinColumn(name = "booking_id")
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "booking_id", unique = true)
+    @ToString.Exclude
+    @JsonIgnore
     private RoomBooking booking;
 
     @Column(nullable = false)
@@ -35,7 +43,8 @@ public class Session {
     @Column(nullable = false)
     private Instant endTime;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private String status;
+    private SessionStatus status;
 }
 

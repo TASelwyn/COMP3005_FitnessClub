@@ -1,15 +1,15 @@
 package tech.selwyn.carleton.comp3005.fitnessclub.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
+@Getter
+@Setter
+@ToString
 @Builder
 @Table(name = "equipment")
 public class Equipment {
@@ -18,8 +18,10 @@ public class Equipment {
     @Column(name = "equipment_id")
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "room_id", nullable = false)
+    @ToString.Exclude
+    @JsonIgnore
     private Room room;
 
     @Column(nullable = false)

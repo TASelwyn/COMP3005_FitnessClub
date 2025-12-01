@@ -39,14 +39,14 @@ public class DashboardService {
                 .limit(3)
                 .map(s -> Map.of(
                         "sessionId", s.getId(),
-                        "trainerName", s.getTrainer().getFirstName() + " " + s.getTrainer().getLastName(),
+                        "trainerName", s.getTrainer().getFullName(),
                         "startTime", s.getStartTime(),
                         "endTime", s.getEndTime()
                 )).toList();
 
+        response.put("upcomingSessions", nextThree);
         response.put("upcomingSessionCount", upcoming.size());
         response.put("pastSessionCount", past.size());
-        response.put("nextUpcomingSessions", nextThree);
 
         // returning our final map that contains everything
         return response;

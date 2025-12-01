@@ -1,7 +1,7 @@
 package tech.selwyn.carleton.comp3005.fitnessclub.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Null;
 import lombok.*;
 
 @Entity
@@ -13,16 +13,17 @@ import lombok.*;
 @Table(name = "health_focus")
 public class HealthFocus {
     @Id
+    @Column(name = "account_id")
     private Long id;
 
     @OneToOne
     @MapsId // maps PK
     @JoinColumn(name = "account_id", nullable = false)
+    @ToString.Exclude
+    @JsonIgnore
     private Account account;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "goal_id")
-    @Null
     private Goal primaryGoal;
-
 }

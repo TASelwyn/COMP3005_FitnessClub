@@ -27,8 +27,8 @@ public class EquipmentService {
         EquipmentIssue equipmentIssue = EquipmentIssue.builder()
                 .equipment(equipment)
                 .description(issue)
-                .reported_by(acc)
-                .reported_at(Instant.now())
+                .reportedBy(acc)
+                .reportedAt(Instant.now())
                 .build();
 
         return equipmentIssueRepo.save(equipmentIssue);
@@ -46,8 +46,8 @@ public class EquipmentService {
         EquipmentRepair equipmentRepair = EquipmentRepair.builder()
                 .issue(equipmentIssue)
                 .notes(notes)
-                .repaired_by(acc)
-                .repaired_at(Instant.now())
+                .repairedBy(acc)
+                .repairedAt(Instant.now())
                 .build();
 
         return equipmentRepairRepo.save(equipmentRepair);

@@ -1,5 +1,6 @@
 package tech.selwyn.carleton.comp3005.fitnessclub.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -11,19 +12,24 @@ import java.util.Map;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-@Data
+@Setter
+@ToString
 @Table(name = "goals")
 public class Goal {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "metric_id", nullable = false)
+    @ToString.Exclude
+    @JsonIgnore
     private Metric metric;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "account_id", nullable = false)
+    @ToString.Exclude
+    @JsonIgnore
     private Account account;
 
     @Column(nullable = false)
