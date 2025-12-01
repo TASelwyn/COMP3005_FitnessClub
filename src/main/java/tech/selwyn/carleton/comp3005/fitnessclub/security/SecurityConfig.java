@@ -1,4 +1,4 @@
-package tech.selwyn.carleton.comp3005.fitnessclub.config;
+package tech.selwyn.carleton.comp3005.fitnessclub.security;
 
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -17,9 +17,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import tech.selwyn.carleton.comp3005.fitnessclub.security.AuthenticationProviderImpl;
-import tech.selwyn.carleton.comp3005.fitnessclub.security.JwtAuthFilter;
-import tech.selwyn.carleton.comp3005.fitnessclub.security.UserDetailsServiceImpl;
 
 @Configuration
 @EnableMethodSecurity

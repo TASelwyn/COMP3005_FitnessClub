@@ -9,9 +9,10 @@ src/main/
       .../fitnessclub/   # Spring Code
          - controller/   # REST Endpoints 
          - dto/          # Data Transfer Objects (FE <-> BE)
+         - exception/    # REST Exception handler
          - model/        # ORM Entity mappings
          - repository/   # ORM Repos Interfaces (to talk to db)
-         - security/     # Spring Security (auth)
+         - security/     # Spring Security (auth, jwt)
          - service/      # Business Logic
    - resources/          # Program Setup
      - db.changelog/     # Database Seed

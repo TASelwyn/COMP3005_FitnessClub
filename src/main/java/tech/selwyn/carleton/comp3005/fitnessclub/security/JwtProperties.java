@@ -1,4 +1,4 @@
-package tech.selwyn.carleton.comp3005.fitnessclub.config;
+package tech.selwyn.carleton.comp3005.fitnessclub.security;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
