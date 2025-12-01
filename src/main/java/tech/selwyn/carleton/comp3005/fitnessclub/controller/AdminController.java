@@ -4,14 +4,16 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import tech.selwyn.carleton.comp3005.fitnessclub.dto.AssignBookingDto;
 import tech.selwyn.carleton.comp3005.fitnessclub.dto.EquipmentIssueDto;
 import tech.selwyn.carleton.comp3005.fitnessclub.dto.EquipmentRepairDto;
-import tech.selwyn.carleton.comp3005.fitnessclub.dto.RoomBookingDto;
 import tech.selwyn.carleton.comp3005.fitnessclub.model.EquipmentIssue;
 import tech.selwyn.carleton.comp3005.fitnessclub.model.EquipmentRepair;
-import tech.selwyn.carleton.comp3005.fitnessclub.model.RoomBooking;
+import tech.selwyn.carleton.comp3005.fitnessclub.model.Session;
 import tech.selwyn.carleton.comp3005.fitnessclub.security.UserDetailsImpl;
 import tech.selwyn.carleton.comp3005.fitnessclub.service.EquipmentService;
 import tech.selwyn.carleton.comp3005.fitnessclub.service.RoomService;
@@ -26,23 +28,13 @@ public class AdminController {
     private final RoomService roomService;
     private final EquipmentService equipmentService;
 
-    @PostMapping("/bookRoom")
-    public ResponseEntity<?> bookRoom(@AuthenticationPrincipal UserDetailsImpl user, @Valid @RequestBody RoomBookingDto req) {
-        RoomBooking booking = roomService.bookRoom(user.getAccount().getId(), req.roomId(), req.startTime(), req.endTime());
+    @PostMapping("/bookRoomForSession")
+    public ResponseEntity<?> bookRoomForSession(@AuthenticationPrincipal UserDetailsImpl user, @Valid @RequestBody AssignBookingDto req) {
+        Session session = roomService.getBookingForSession(user.getAccount().getId(), req.sessionId());
 
         return ResponseEntity.ok(Map.of(
                 "message", "Successfully booked room for session",
-                "bookingId", booking.getId()));
-    }
-
-    @PostMapping("/assignBookingToSession")
-    public ResponseEntity<?> assignBookingToSession(@Valid @RequestBody AssignBookingDto req) {
-        roomService.assignBookingToSession(req.bookingId(), req.sessionId());
-        // TODO Might merge w/ bookRoom?
-
-        return ResponseEntity.ok(Map.of(
-                "message", "Successfully updated session with booking")
-        );
+                "session", session));
     }
 
     @PostMapping("/logMaintenance")

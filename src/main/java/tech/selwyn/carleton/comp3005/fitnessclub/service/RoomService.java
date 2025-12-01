@@ -5,11 +5,15 @@ import org.springframework.stereotype.Service;
 import tech.selwyn.carleton.comp3005.fitnessclub.model.Account;
 import tech.selwyn.carleton.comp3005.fitnessclub.model.Room;
 import tech.selwyn.carleton.comp3005.fitnessclub.model.RoomBooking;
+import tech.selwyn.carleton.comp3005.fitnessclub.model.Session;
 import tech.selwyn.carleton.comp3005.fitnessclub.repository.AccountRepository;
 import tech.selwyn.carleton.comp3005.fitnessclub.repository.RoomBookingRepository;
 import tech.selwyn.carleton.comp3005.fitnessclub.repository.RoomRepository;
+import tech.selwyn.carleton.comp3005.fitnessclub.repository.SessionRepository;
 
 import java.time.Instant;
+import java.util.List;
+import java.util.Random;
 
 @Service
 @AllArgsConstructor
@@ -17,25 +21,33 @@ public class RoomService {
     private final AccountRepository accRepo;
     private final RoomRepository roomRepo;
     private final RoomBookingRepository roomBookingRepo;
+    private final SessionRepository sessionRepo;
 
     /*
     Room Booking: Assign rooms for sessions or classes. Prevent double-booking
     */
-    public RoomBooking bookRoom(Long accountId, Long roomId, Instant startTime, Instant endTime) {
+    public RoomBooking bookRandomRoom(Long accountId, Instant startTime, Instant endTime) {
         Account acc = accRepo.findById(accountId).orElseThrow(() -> new IllegalArgumentException("Unable to find member"));
-
-        Room room = roomRepo.findById(roomId).orElseThrow(() -> new IllegalArgumentException("Room not found"));
 
         if (startTime.isAfter(endTime)) {
             throw new IllegalArgumentException("Invalid start and end time");
         }
 
-        if (roomBookingRepo.existsByRoomIdAndStartTimeLessThanAndEndTimeGreaterThan(roomId, endTime, startTime)) {
-            throw new IllegalStateException("Room is already booked during the selected time period. Overlaps are not allowed.");
+        // Get available rooms
+        List<Room> available = roomRepo.findAll().stream()
+                .filter(r -> !roomBookingRepo.existsByRoomIdAndStartTimeLessThanAndEndTimeGreaterThan(
+                        r.getId(), endTime, startTime))
+                .toList();
+
+        if (available.isEmpty()) {
+            throw new IllegalStateException("No rooms available for the selected time");
         }
 
+        // Get random room and claim it
+        Room randomRoom = available.get(new Random().nextInt(available.size()));
+
         RoomBooking booking = RoomBooking.builder()
-                .room(room)
+                .room(randomRoom)
                 .booker(acc)
                 .startTime(startTime)
                 .endTime(endTime)
@@ -44,12 +56,16 @@ public class RoomService {
         return roomBookingRepo.save(booking);
     }
 
-    public void assignBookingToSession(Long bookingId, Long sessionId) {
-        RoomBooking roomBooking = roomBookingRepo.findById(bookingId).orElseThrow(() -> new IllegalArgumentException("Booking not found"));
+    public Session getBookingForSession(Long accountId, Long sessionId) {
+        // Ensure session exists
+        Session session = sessionRepo.findById(sessionId).orElseThrow(() -> new IllegalArgumentException("Session not found"));
 
-        // TODO ASSIGN BOOKING TO SESSION
-        // Session session = sessionRepo.findBySessionId(sessionId).orElseThrow(() -> new IllegalArgumentException("Session not found"));
-        // UPDATE Session's booking ID With: roomBooking.getBookingId()
+        // Get room booking randomly
+        RoomBooking booking = bookRandomRoom(accountId, session.getStartTime(), session.getEndTime());
+
+        session.setBooking(booking);
+
+        return sessionRepo.save(session);
     }
 
 }
