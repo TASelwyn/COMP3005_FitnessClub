@@ -37,10 +37,10 @@ public class TrainerController {
 
     @PostMapping("/setAvailability")
     public ResponseEntity<?> setAvailability(
-            @RequestParam Long trainerId,
+            @AuthenticationPrincipal UserDetailsImpl user,
             @RequestBody SetAvailabilityDto req
     ) {
-        Availability availability = availabilityService.setAvailability(trainerId, req.startTime(), req.endTime());
+        Availability availability = availabilityService.setAvailability(user.getAccount().getId(), req.startTime(), req.endTime());
 
         return ResponseEntity.ok(Map.of(
                 "status", "success",

@@ -35,7 +35,7 @@ public class CommonController {
 
         List<String> roles = auth.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
-                .collect(Collectors.toList());
+                .toList();
 
         return Map.of(
                 "authenticated", auth.isAuthenticated(),
@@ -54,6 +54,13 @@ public class CommonController {
 
         // Update goal
         Goal primaryGoal = goalService.getPrimaryGoal(user.getAccount().getId());
+        primaryGoal.setTitle(req.goalTitle());
+        primaryGoal.setTargetValue(req.goalTargetValue());
+        primaryGoal.setTargetDate(req.goalTargetDate());
+
+        Metric metric = metricService.getMetric(req.goalMetricId());
+        primaryGoal.setMetric(metric);
+        /*
         if (!req.goalTitle().isBlank() && !req.goalTitle().equals(primaryGoal.getTitle())) {
             primaryGoal.setTitle(req.goalTitle());
         }
@@ -68,7 +75,7 @@ public class CommonController {
         if (!req.goalMetricId().equals(primaryGoal.getMetric().getId())) {
             Metric metric = metricService.getMetric(req.goalMetricId());
             primaryGoal.setMetric(metric);
-        }
+        }*/
 
         return ResponseEntity.ok(Map.of(
                 "status", "success"

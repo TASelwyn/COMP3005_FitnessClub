@@ -1,18 +1,16 @@
 package tech.selwyn.carleton.comp3005.fitnessclub.security;
 
-import lombok.Builder;
-import lombok.Getter;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import tech.selwyn.carleton.comp3005.fitnessclub.model.Account;
-import tech.selwyn.carleton.comp3005.fitnessclub.model.RoleType;
 
 import java.util.Collection;
 import java.util.List;
 
 @Getter
-@Builder
+@Setter
 public class UserDetailsImpl implements UserDetails {
 
     private final Account account;
@@ -35,15 +33,15 @@ public class UserDetailsImpl implements UserDetails {
     public String getUsername() { return account.getEmail(); }
 
     @Override
-    public boolean isAccountNonExpired() { return false; }
+    public boolean isAccountNonExpired() { return true; }
 
     @Override
-    public boolean isAccountNonLocked() { return false; }
+    public boolean isAccountNonLocked() { return true; }
 
     @Override
-    public boolean isCredentialsNonExpired() { return false; }
+    public boolean isCredentialsNonExpired() { return true; }
 
     @Override
-    public boolean isEnabled() { return false; }
+    public boolean isEnabled() { return true; }
 
 }
