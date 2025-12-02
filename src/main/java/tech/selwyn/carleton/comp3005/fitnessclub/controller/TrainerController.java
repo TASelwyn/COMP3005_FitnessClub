@@ -23,8 +23,8 @@ public class TrainerController {
     private final SessionService sessionService;
     private final AvailabilityService availabilityService;
 
-    @GetMapping("/memberLookup")
-    public ResponseEntity<?> memberLookup(@RequestParam LookupMemberDto req) {
+    @PostMapping("/memberLookup")
+    public ResponseEntity<?> memberLookup(@RequestBody LookupMemberDto req) {
         var results = accService.lookupMember(req.name());
 
         return ResponseEntity.ok(Map.of(
