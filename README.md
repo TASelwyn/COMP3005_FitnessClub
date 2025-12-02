@@ -3,6 +3,11 @@
 This project fully integrates Spring Boot, Hibernate, Jakarta and Liquibase as a full-fledged application & ORM system.
 
 ### Demo link
+First part (ER Model Description)
+- https://youtu.be/_wFIsMYIVHw
+
+Second part (ORM/Program rundown/walk through)
+- https://youtu.be/pr9YT0NaT34
 
 ## Project Structure
 ```bash
