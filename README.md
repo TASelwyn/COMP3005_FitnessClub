@@ -2,6 +2,8 @@
 ## Health and Fitness Club Management System
 This project fully integrates Spring Boot, Hibernate, Jakarta and Liquibase as a full-fledged application & ORM system.
 
+### Demo link
+
 ## Project Structure
 ```bash
 src/main/
@@ -13,7 +15,7 @@ src/main/
          - model/        # ORM Entity mappings
          - repository/   # ORM Repos Interfaces (to talk to db)
          - security/     # Spring Security (auth, jwt)
-         - service/      # Business Logic
+         - service/      # Application Logic
    - resources/          # Program Setup
      - db.changelog/     # Database Seed
      - application.yml   # Spring Boot configuration
